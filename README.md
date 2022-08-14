@@ -6,3 +6,4 @@ Based on FTC's official code repository i.e FtcRobotController (https://github.c
 Team 15004 uses the following libraries
 - RoadRunner for motion planning
 - OpenCV for object detection
+- Mani for being a good boy
