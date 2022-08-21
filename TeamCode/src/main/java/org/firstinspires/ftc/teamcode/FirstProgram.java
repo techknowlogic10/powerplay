@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Autonomous
 public class FirstProgram extends LinearOpMode {
 
-
     @Override
     public void runOpMode() {
         waitForStart();
