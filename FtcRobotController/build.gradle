@@ -12,11 +12,6 @@ android {
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         buildConfigField "String", "APP_BUILD_TIME", '"' + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ROOT).format(new Date())) + '"'
-        externalNativeBuild {
-            cmake {
-                cppFlags ''
-            }
-        }
     }
 
     compileSdkVersion 29
@@ -26,13 +21,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     namespace = 'com.qualcomm.ftcrobotcontroller'
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.18.1'
-        }
-    }
-    ndkVersion '23.0.7599858'
 }
 
 apply from: '../build.dependencies.gradle'

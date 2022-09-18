@@ -28,7 +28,7 @@ public class MeapMeapTesting {
                                 .build()
                 );
 
-        meepMeep.setBackground(MeepMeep.Background.GRID_BLUE)
+        meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_OFFICIAL)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)
