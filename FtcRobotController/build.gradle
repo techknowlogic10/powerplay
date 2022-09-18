@@ -32,6 +32,7 @@ android {
             version '3.18.1'
         }
     }
+    ndkVersion '23.0.7599858'
 }
 
 apply from: '../build.dependencies.gradle'

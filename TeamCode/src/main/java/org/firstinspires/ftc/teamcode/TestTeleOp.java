@@ -7,11 +7,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class TestTeleOp extends OpMode {
 
-    DcMotor kinBob;
+    DcMotor kingBob;
 
     @Override
     public void init() {
-        kinBob = hardwareMap.get(DcMotor.class, "bob");
+        kingBob = hardwareMap.get(DcMotor.class, "kingBob");
     }
 
     @Override
@@ -20,6 +20,6 @@ public class TestTeleOp extends OpMode {
         float left_stick_y_value = gamepad1.left_stick_y;
         telemetry.log().add("Y value is " + left_stick_y_value);
 
-        kinBob.setPower(left_stick_y_value);
+        kingBob.setPower(left_stick_y_value);
     }
 }
