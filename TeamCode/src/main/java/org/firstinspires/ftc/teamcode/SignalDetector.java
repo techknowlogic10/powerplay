@@ -23,10 +23,8 @@ public class SignalDetector {
     // color brown 27, color green around 60 color blue 48
 
 
-    private Point leftRectanglePoint1 = new Point(20,30);
-    private Point leftRectanglePoint2 = new Point(40,60);
-
-
+    private Point point1 = new Point(20,30);
+    private Point point2 = new Point(40,60);
 
     private String elementPosition = null;
 
@@ -42,9 +40,9 @@ public class SignalDetector {
 
         if(monitorViewNeeded) {
             int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-            this.webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam1"), cameraMonitorViewId);
+            this.webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "IDK"), cameraMonitorViewId);
         } else {
-            this.webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam1"));
+            this.webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "IDK"));
         }
 
         webcam.setPipeline(new TeamShippingElementDetectorPipeline());
@@ -80,19 +78,19 @@ public class SignalDetector {
         public Mat processFrame(Mat frame) {
 
 
-            Imgproc.rectangle(frame, leftRectanglePoint1, leftRectanglePoint2, new Scalar(0, 0, 255), 2);
+            Imgproc.rectangle(frame, point1, point2, new Scalar(0, 0, 255), 2);
            // Imgproc.rectangle(frame, rightRectanglePoint1, rightRectanglePoint2, new Scalar(0, 255, 0), 2);
 
             Imgproc.cvtColor(frame, inputInYCRCB, Imgproc.COLOR_RGB2YCrCb);
             Core.extractChannel(inputInYCRCB, inputInCB, 1);
 
-            Mat leftRectangleFrame = frame.submat(new Rect(leftRectanglePoint1, leftRectanglePoint2));
+            Mat leftRectangleFrame = frame.submat(new Rect(point1, point2));
            // Mat rightRectangleFrame = frame.submat(new Rect(rightRectanglePoint1, rightRectanglePoint2));
 
-            int leftRectangleMean = (int) Core.mean(leftRectangleFrame).val[0];
+            int meanColor = (int) Core.mean(leftRectangleFrame).val[0];
            // int rightRectangleMean = (int) Core.mean(rightRectangleFrame).val[0];
 
-            telemetry.log().add("leftRectangleMean is " + leftRectangleMean);
+            telemetry.log().add("meanColor is " + meanColor);
             //telemetry.log().add("rightRectangleMean is " + rightRectangleMean);
 
 
