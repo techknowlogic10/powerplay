@@ -81,12 +81,16 @@ public class MacnumTeleOp extends OpMode {
         //arm code
 
         if (gamepad2.dpad_right) {
-            armPower = armPower + 0.5;
-            arm.setPosition(armPower);
+            if(armPower < 1) {
+                armPower = armPower + 0.05;
+                arm.setPosition(armPower);
+            }
         }
         if (gamepad2.dpad_left) {
-            armPower = armPower - 0.5;
-            arm.setPosition(armPower);
+            if(armPower > 0) {
+                armPower = armPower - 0.05;
+                arm.setPosition(armPower);
+            }
         }
 
         //grabber code
@@ -98,16 +102,7 @@ public class MacnumTeleOp extends OpMode {
             grabber.setPosition(0.01);
         }
 
-        if(armPower >= 1){
-            armPower =1;
-        }
 
-        if(armPower <=0){
-            armPower = 0;
-        }
-
-
-        telemetry.log().add("elevator power is "+ elevatorPower);
         telemetry.log().add("arm position is" + arm.getPosition());
 
     }
