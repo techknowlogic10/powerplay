@@ -20,6 +20,9 @@ public class MacnumTeleOp extends OpMode {
     DcMotor slider = null;
     Servo arm = null;
     Servo grabber = null;
+
+    double armPower;
+
     @Override
     public void init() {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
@@ -39,14 +42,17 @@ public class MacnumTeleOp extends OpMode {
         grabber = hardwareMap.servo.get("grabber");
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         elevator.setDirection(DcMotorSimple.Direction.REVERSE);
+        armPower = 0.0;
+        arm.setPosition(armPower);
+        telemetry.log().add("initial arm power"+arm.getPosition());
 
     }
 
     @Override
     public void loop() {
 
-        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
-        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+        double y = gamepad1.left_stick_y; // Remember, this is reversed!
+        double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
         double rx =gamepad1.right_stick_x;
 
         // Denominator is the largest motor power (absolute value) or 1
@@ -63,34 +69,39 @@ public class MacnumTeleOp extends OpMode {
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
 
-        double elevatorPower = gamepad2.right_stick_y;
-        double armPower = 0.1;
+        double elevatorPower = -gamepad2.right_stick_y;
 
         elevator.setPower(elevatorPower);
 
         //slider code
 
         if (gamepad1.right_bumper) {
-            slider.setPower(1);
-        }
-        if (gamepad1.left_bumper) {
             slider.setPower(-1);
         }
+        if (gamepad1.left_bumper) {
+            slider.setPower(1);
+        }
         slider.setPower(0);
-
         //arm code
-
+        telemetry.log().add(" arm power is " + armPower);
         if (gamepad2.dpad_right) {
-            if(armPower < 1) {
-                armPower = armPower + 0.05;
+            if (armPower < 1.0) {
+                armPower = armPower + 0.001;
+                telemetry.log().add("dpadright arm power is " + armPower);
                 arm.setPosition(armPower);
-            }
+
+        }
+
         }
         if (gamepad2.dpad_left) {
-            if(armPower > 0) {
-                armPower = armPower - 0.05;
+                armPower = armPower - 0.001;
+                telemetry.log().add("dpad left arm power is " + armPower);
                 arm.setPosition(armPower);
-            }
+
+        }
+
+        if(armPower < 0){
+            arm.setPosition(0.0);
         }
 
         //grabber code
@@ -103,7 +114,6 @@ public class MacnumTeleOp extends OpMode {
         }
 
 
-        telemetry.log().add("arm position is" + arm.getPosition());
 
     }
 }
