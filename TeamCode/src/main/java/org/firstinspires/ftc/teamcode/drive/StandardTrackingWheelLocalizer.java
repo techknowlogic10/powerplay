@@ -37,8 +37,8 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     public static double FORWARD_OFFSET = -4.3; // offset is negative because perpendicular wheel is in the behind two parallel dead wheels
 
     /* Lines 37-38 in StandardTrackingWheelLocalizer.java */
-    public static double X_MULTIPLIER = 1; // Multiplier in the X direction
-    public static double Y_MULTIPLIER = 1; // Multiplier in the Y direction
+    public static double X_MULTIPLIER = 0.83; // Multiplier in the X direction
+    public static double Y_MULTIPLIER = 1.81; // Multiplier in the Y direction
 
     private Encoder leftEncoder, rightEncoder, backEncoder;
 
