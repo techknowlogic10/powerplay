@@ -17,6 +17,7 @@ public class Arm {
     }
 
     public void move(double armPosition) {
+
         arm.setPosition(armPosition);
     }
 

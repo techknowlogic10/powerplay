@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Grabber {
 
     public static double GRABBER_RELEASE_POSITION = 0.01;
+    public static double GRABBER_PICKUP_POSITION = 0.3;
 
     Servo grabber = null;
 
@@ -18,4 +19,8 @@ public class Grabber {
     public void release() {
         grabber.setPosition(GRABBER_RELEASE_POSITION);
     }
+    public void pickup() {
+        grabber.setPosition(GRABBER_PICKUP_POSITION);
+    }
+
 }

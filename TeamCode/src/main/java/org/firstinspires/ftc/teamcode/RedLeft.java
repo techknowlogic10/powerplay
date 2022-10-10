@@ -42,12 +42,14 @@ public class RedLeft extends LinearOpMode {
         Elevator elevator = new Elevator(hardwareMap);
         Arm arm = new Arm(hardwareMap);
         Grabber grabber = new Grabber(hardwareMap);
+        grabber.pickup();
 
         waitForStart();
 
         //scan here to get parking position
 
         //Step 1 - Strafe Right
+
         Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(STEP1_STRAFE_RIGHT).build();
         drivetrain.followTrajectory(step1_strafeRight);
 
@@ -64,6 +66,7 @@ public class RedLeft extends LinearOpMode {
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
+        wait(2000);
 
         //sto6 - grabber releases the cone
         grabber.release();
