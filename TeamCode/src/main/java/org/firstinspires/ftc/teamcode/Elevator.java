@@ -58,4 +58,14 @@ public class Elevator {
             Thread.currentThread().interrupt();
         }
     }
+
+    public void goToHome() {
+        elevator.setTargetPosition(0);
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setPower(1.0);
+
+        while (elevator.isBusy()) {
+            sleep(50);
+        }
+    }
 }
