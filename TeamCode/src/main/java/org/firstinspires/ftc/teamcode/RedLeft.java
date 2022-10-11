@@ -66,7 +66,7 @@ public class RedLeft extends LinearOpMode {
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
-        wait(2000);
+        sleep(2000);
 
         //sto6 - grabber releases the cone
         grabber.release();
