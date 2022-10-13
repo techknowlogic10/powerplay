@@ -19,17 +19,17 @@ public class RedLeft extends LinearOpMode {
 
     public static int JUNCTION_LEVEL = 3;
 
-    public static double ARM_POSITION = 0.3;
+    public static double ARM_POSITION = 0.21;
 
-    public static int STEP1_STRAFE_RIGHT = 24;
-    public static int STEP2_FORWARD = 34;
-    public static int STEP3_STRAFE_RIGHT = 34;
+    public static int STEP1_STRAFE_RIGHT = 28;
+    public static int STEP2_FORWARD = 36;
+    public static int STEP3_STRAFE_RIGHT = 5;
 
-    private static int STEP8_BACK = 10;
+    public static int STEP8_BACK = 8;
 
-    private static int PARKING_ONE_STRAFE_LEFT = 40;
-    private static int PARKING_TWO_STRAFE_LEFT = 20;
-    private static int PARKING_THREE_STRAFE_LEFT = 2;
+    public static int PARKING_ONE_STRAFE_LEFT = 50;
+    public static int PARKING_TWO_STRAFE_LEFT = 20;
+    public static int PARKING_THREE_STRAFE_LEFT = 2;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -48,6 +48,8 @@ public class RedLeft extends LinearOpMode {
 
         //scan here to get parking position
 
+        elevator.goToLevel(0);
+
         //Step 1 - Strafe Right
 
         Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(STEP1_STRAFE_RIGHT).build();
@@ -63,10 +65,11 @@ public class RedLeft extends LinearOpMode {
 
         //step-4 elevator up
         elevator.goToLevel(JUNCTION_LEVEL);
+        sleep(5000);
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
-        sleep(2000);
+        sleep(3000);
 
         //sto6 - grabber releases the cone
         grabber.release();

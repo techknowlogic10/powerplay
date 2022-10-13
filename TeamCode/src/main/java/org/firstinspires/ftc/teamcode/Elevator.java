@@ -11,7 +11,7 @@ public class Elevator {
 
     public static int LOW_JUNCTION_TICKS = 2700;
     public static int MID_JUNCTION_TICKS = 4500;
-    public static int HIGH_JUNCTION_TICKS = 6200;
+    public static int HIGH_JUNCTION_TICKS = 6500;
 
     private HardwareMap hardwareMap;
     DcMotor elevator = null;
@@ -31,7 +31,9 @@ public class Elevator {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        if(junctionLevel == 1) {
+        if(junctionLevel == 0) {
+            goToPosition(300);
+        } else if(junctionLevel == 1) {
             goToPosition(LOW_JUNCTION_TICKS);
         } else if (junctionLevel == 2) {
             goToPosition(MID_JUNCTION_TICKS);
