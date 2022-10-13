@@ -15,8 +15,6 @@ public class RedLeft extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(-37, -60, Math.toRadians(90));
 
-    public static int PARKING_POSITION = 1;
-
     public static int JUNCTION_LEVEL = 3;
 
     public static double ARM_POSITION = 0.21;
@@ -34,6 +32,9 @@ public class RedLeft extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        AprilTagSignalDetector detector = new AprilTagSignalDetector(hardwareMap, telemetry, false);
+        detector.startDetection();
+
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
         drivetrain.setPoseEstimate(STARTING_POSITION);
 
@@ -47,6 +48,8 @@ public class RedLeft extends LinearOpMode {
         waitForStart();
 
         //scan here to get parking position
+        int parkingPosition = detector.getSignalPosition();
+        telemetry.log().add("Parking position is " + parkingPosition);
 
         elevator.goToLevel(0);
 
@@ -85,7 +88,7 @@ public class RedLeft extends LinearOpMode {
         elevator.goToHome();
 
         //step10 - park
-        parkRobot(PARKING_POSITION, drivetrain);
+        parkRobot(parkingPosition, drivetrain);
 
         //step 11 - park to make teleop easy (turn 180) //TODO
     }
