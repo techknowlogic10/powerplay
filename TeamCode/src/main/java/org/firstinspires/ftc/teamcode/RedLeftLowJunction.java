@@ -18,11 +18,11 @@ public class RedLeftLowJunction extends LinearOpMode {
 
     public static int JUNCTION_LEVEL = 1;
 
-    public static double ARM_POSITION = 0.21;
+    public static double ARM_POSITION = 0.25;
 
     public static int STEP1_STRAFE_LEFT = 20;
-    public static int STEP2_FORWARD = 36;
-    public static int STEP3_STRAFE_RIGHT = 8;
+    public static int STEP2_FORWARD = 34;
+    public static int STEP3_STRAFE_RIGHT = 4;
 
     public static int STEP8_BACK = 8;
 
@@ -64,15 +64,16 @@ public class RedLeftLowJunction extends LinearOpMode {
 
         //step-4 elevator up
         elevator.goToLevel(JUNCTION_LEVEL);
-        sleep(5000);
+       // sleep(5000);
+        elevator.holdElevator(100);
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
-        sleep(3000);
-
+       // sleep(3000);
+          elevator.holdElevator(60);
         //sto6 - grabber releases the cone
         grabber.release();
-
+            elevator.holdElevator(20);
         //step7 - move arm to home position
         arm.goHome();
 

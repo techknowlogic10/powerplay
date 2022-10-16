@@ -46,19 +46,20 @@ public class Elevator {
 
         elevator.setTargetPosition(desiredPosition);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        elevator.setPower(0.8);
+        elevator.setPower(1.0);
 
         while (elevator.isBusy()) {
             sleep(50);
         }
 
-       for(int i=0; i<100 ;i++){
-           elevator.setPower(0.05);
-           sleep(50);
-       }
 
+    }
 
-
+    public void holdElevator(int holdIterations){
+        for(int i=0; i<holdIterations ;i++){
+            elevator.setPower(0.05);
+            sleep(50);
+        }
     }
 
     private final void sleep(long milliseconds) {

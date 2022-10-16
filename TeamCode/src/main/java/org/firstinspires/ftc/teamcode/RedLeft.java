@@ -68,14 +68,17 @@ public class RedLeft extends LinearOpMode {
 
         //step-4 elevator up
         elevator.goToLevel(JUNCTION_LEVEL);
-        sleep(5000);
+        //sleep(5000);
+        elevator.holdElevator(100);
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
-        sleep(3000);
+       // sleep(3000);
+        elevator.holdElevator(60);
 
         //sto6 - grabber releases the cone
         grabber.release();
+        elevator.holdElevator(20);
 
         //step7 - move arm to home position
         arm.goHome();
