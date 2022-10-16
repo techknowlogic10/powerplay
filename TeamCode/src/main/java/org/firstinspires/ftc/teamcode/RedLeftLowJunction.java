@@ -23,11 +23,11 @@ public class RedLeftLowJunction extends LinearOpMode {
 
     public static int STEP1_STRAFE_LEFT = 20;
     public static int STEP2_FORWARD = 34;
-    public static int STEP3_STRAFE_RIGHT = 6;
+    public static int STEP3_STRAFE_RIGHT = 5;
 
     public static int STEP8_BACK = 8;
 
-    public static int PARKING_ONE_STRAFE_RIGHT = 2;
+    public static int PARKING_ONE_STRAFE_RIGHT = 4;
     public static int PARKING_TWO_STRAFE_RIGHT = 24;
     public static int PARKING_THREE_STRAFE_RIGHT = 48;
 
