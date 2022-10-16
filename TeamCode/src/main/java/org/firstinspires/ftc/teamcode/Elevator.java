@@ -9,20 +9,20 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 @Config
 public class Elevator {
 
-    public static int LOW_JUNCTION_TICKS = 2700;
-    public static int MID_JUNCTION_TICKS = 4500;
-    public static int HIGH_JUNCTION_TICKS = 6500;
+    public static int LOW_JUNCTION_TICKS = 1000;
+    public static int MID_JUNCTION_TICKS = 1900;
+    public static int HIGH_JUNCTION_TICKS = 2600;
 
     private HardwareMap hardwareMap;
     DcMotor elevator = null;
 
     //diameter of spool = 50mm
-    //REV HEX 40:1..ticks per rev :
+    //REV HEX 40:1..ticks per rev :''
 
     public Elevator(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         elevator = hardwareMap.dcMotor.get("elevator");
-        elevator.setDirection(DcMotorSimple.Direction.REVERSE);
+        //elevator.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void goToLevel(int junctionLevel) {
@@ -46,11 +46,19 @@ public class Elevator {
 
         elevator.setTargetPosition(desiredPosition);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        elevator.setPower(1.0);
+        elevator.setPower(0.8);
 
         while (elevator.isBusy()) {
             sleep(50);
         }
+
+       for(int i=0; i<100 ;i++){
+           elevator.setPower(0.05);
+           sleep(50);
+       }
+
+
+
     }
 
     private final void sleep(long milliseconds) {
