@@ -17,6 +17,7 @@ public class RedLeftLowJunction extends LinearOpMode {
     public static int PARKING_POSITION = 1;
 
     public static int JUNCTION_LEVEL = 1;
+    public static int ELEVATOR_HOLD_SECONDS = 40;
 
     public static double ARM_POSITION = 0.22;
 
@@ -64,13 +65,13 @@ public class RedLeftLowJunction extends LinearOpMode {
 
         //step-4 elevator up
         elevator.goToLevel(JUNCTION_LEVEL);
-        sleep(3000);
-        elevator.holdElevator(60);
+        sleep(1000);
+        elevator.holdElevator(ELEVATOR_HOLD_SECONDS);
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
        // sleep(3000);
-          elevator.holdElevator(60);
+          elevator.holdElevator(ELEVATOR_HOLD_SECONDS);
         //sto6 - grabber releases the cone
         grabber.release();
             elevator.holdElevator(20);
