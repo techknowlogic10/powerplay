@@ -14,11 +14,7 @@ public class RedLeftLowJunction extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(-37, -60, Math.toRadians(90));
 
-    public static int PARKING_POSITION = 1;
-
     public static int JUNCTION_LEVEL = 1;
-    public static int ELEVATOR_HOLD_SECONDS = 40;
-
     public static double ARM_POSITION = 0.22;
 
     public static int STEP1_STRAFE_LEFT = 20;
@@ -27,12 +23,17 @@ public class RedLeftLowJunction extends LinearOpMode {
 
     public static int STEP8_BACK = 8;
 
-    public static int PARKING_ONE_STRAFE_RIGHT = 4;
-    public static int PARKING_TWO_STRAFE_RIGHT = 24;
-    public static int PARKING_THREE_STRAFE_RIGHT = 48;
+    public static int PARKING_ONE_STRAFE_LEFT = 6;
+    public static int PARKING_TWO_STRAFE_RIGHT = 21;
+    public static int PARKING_THREE_STRAFE_RIGHT = 45;
+
+    public static int ELEVATOR_HOLD_SECONDS = 40;
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        AprilTagSignalDetector detector = new AprilTagSignalDetector(hardwareMap, telemetry, false);
+        detector.startDetection();
 
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
         drivetrain.setPoseEstimate(STARTING_POSITION);
@@ -47,6 +48,8 @@ public class RedLeftLowJunction extends LinearOpMode {
         waitForStart();
 
         //scan here to get parking position
+        int parkingPosition = detector.getSignalPosition();
+        telemetry.log().add("Parking position is " + parkingPosition);
 
         elevator.goToLevel(0);
 
@@ -86,7 +89,7 @@ public class RedLeftLowJunction extends LinearOpMode {
         elevator.goToHome();
 
         //step10 - park
-        parkRobot(PARKING_POSITION, drivetrain);
+        parkRobot(parkingPosition, drivetrain);
 
         //step 11 - park to make teleop easy (turn 180) //TODO
 
@@ -94,17 +97,16 @@ public class RedLeftLowJunction extends LinearOpMode {
 
     private void parkRobot(int parkingPosition, SampleMecanumDrive drivetrain) {
 
-        int strafeLeft = 0;
+        Trajectory park_strafe = null;
 
         if(parkingPosition == 1) {
-            strafeLeft = PARKING_ONE_STRAFE_RIGHT;
+            park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeLeft(PARKING_ONE_STRAFE_LEFT).build();
         } else if(parkingPosition == 2) {
-            strafeLeft = PARKING_TWO_STRAFE_RIGHT;
+            park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(PARKING_TWO_STRAFE_RIGHT).build();
         } else {
-            strafeLeft = PARKING_THREE_STRAFE_RIGHT;
+            park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(PARKING_THREE_STRAFE_RIGHT).build();
         }
 
-        Trajectory park_strafe_left = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeLeft(strafeLeft).build();
-        drivetrain.followTrajectory(park_strafe_left);
+        drivetrain.followTrajectory(park_strafe);
     }
 }

@@ -83,7 +83,7 @@ public class AprilTagSignalDetector {
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                webcam.startStreaming(800, 448, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(800, 448, OpenCvCameraRotation.UPSIDE_DOWN);
             }
 
             @Override

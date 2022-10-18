@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
@@ -13,8 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp
-public class TeleOP_2022_2023 extends OpMode {
-
+public class DriverOperator extends OpMode {
     // Declare our motors
     // Make sure your ID's match your configuration
     DcMotor frontLeft = null;
@@ -30,6 +31,7 @@ public class TeleOP_2022_2023 extends OpMode {
 
 
     DistanceSensor SliderDistance = null;
+
 
     double SliderSpeed = 0;
     double ArmPos = 0;
@@ -68,6 +70,12 @@ public class TeleOP_2022_2023 extends OpMode {
     @Override
     public void loop() {
         Drivepower = 2;
+        if (gamepad1.b){
+            Drivepower = 4;
+        }
+        if (gamepad1.left_stick_button){
+            Drivepower = 1.5;
+        }
         double y = gamepad1.left_stick_y; // Remember, this is reversed!
         double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
         double rx = -gamepad1.right_stick_x;
@@ -86,7 +94,7 @@ public class TeleOP_2022_2023 extends OpMode {
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
 
-        Elevator.setPower(gamepad2.right_stick_y);
+        Elevator.setPower(-gamepad2.right_stick_y);
         if (gamepad2.dpad_down){
             ArmPos = 0;
         }
@@ -102,15 +110,21 @@ public class TeleOP_2022_2023 extends OpMode {
         ArmPos = ArmPos + gamepad2.left_stick_x/1000;
         Arm.setPosition(ArmPos);
         if (gamepad1.right_bumper){
-            Slider.setPower(-1);
+            SliderSpeed = -1;
+        } else if (gamepad1.left_bumper) {
+            SliderSpeed = 1;
+        } else{
+            SliderSpeed = 0;
         }
-        if (gamepad1.left_bumper) {
-            Slider.setPower(1);
+
+
+
+        if (gamepad1.a){
+            SliderSpeed = SliderSpeed/2;
         }
-        Slider.setPower(0);
         telemetry.log().add("Arm position ="+ ArmPos);
 
-        SliderSpeed = 0;
+        Slider.setPower(SliderSpeed);
 
         if (ArmPos < 0){
             ArmPos = 0;
@@ -128,11 +142,10 @@ public class TeleOP_2022_2023 extends OpMode {
         }
         Grabber.setPosition(GrabberPos);
 
-        if (gamepad1.left_stick_button){
-            Drivepower = 1.5;
-            gamepad1.rumble(100);
-        }
         telemetry.log().add("elevator distance is "+ Elevator.getCurrentPosition());
-    }
-}
 
+
+
+    }
+
+}

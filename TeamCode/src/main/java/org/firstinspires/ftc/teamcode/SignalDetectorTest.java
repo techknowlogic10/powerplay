@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.SignalDetector;
 
 @Autonomous
-//@Disabled
+@Disabled
 @Config
 public class SignalDetectorTest extends LinearOpMode {
 
