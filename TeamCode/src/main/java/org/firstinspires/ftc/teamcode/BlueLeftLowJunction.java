@@ -19,7 +19,7 @@ public class BlueLeftLowJunction extends LinearOpMode {
 
     public static int STEP1_STRAFE_LEFT = 20;
     public static int STEP2_FORWARD = 35;
-    public static int STEP3_STRAFE_RIGHT = 5;
+    public static int STEP3_STRAFE_RIGHT = 6;
 
     public static int STEP8_BACK = 8;
 
