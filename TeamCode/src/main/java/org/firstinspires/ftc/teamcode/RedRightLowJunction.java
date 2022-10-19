@@ -61,6 +61,8 @@ public class RedRightLowJunction extends LinearOpMode {
         Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(STEP1_STRAFE_RIGHT).build();
         drivetrain.followTrajectory(step1_strafeRight);
 
+        //drivetrain.getPoseEstimate().get
+
         //Step 2 - Forward
         Trajectory step2_forward = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).forward(STEP2_FORWARD).build();
         drivetrain.followTrajectory(step2_forward);

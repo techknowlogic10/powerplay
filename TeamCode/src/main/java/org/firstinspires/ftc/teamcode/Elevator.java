@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Elevator {
 
     public static int LOW_JUNCTION_TICKS = 1000;
-    public static int MID_JUNCTION_TICKS = 1900;
+    public static int MID_JUNCTION_TICKS = 1550;
     public static int HIGH_JUNCTION_TICKS = 2600;
 
     private HardwareMap hardwareMap;

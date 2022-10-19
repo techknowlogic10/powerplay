@@ -17,9 +17,9 @@ public class RedRightMedJunction extends LinearOpMode {
     public static int JUNCTION_LEVEL = 2;
     public static double ARM_POSITION = 0.22;
 
-    public static int STEP1_STRAFE_LEFT = 18;
+    public static int STEP1_STRAFE_LEFT = 20;
     public static int STEP2_FORWARD = 34;
-    public static int STEP3_STRAFE_RIGHT = 5;
+    public static int STEP3_STRAFE_RIGHT = 6;
 
     public static int STEP8_BACK = 8;
 
@@ -28,6 +28,9 @@ public class RedRightMedJunction extends LinearOpMode {
     public static int PARKING_THREE_STRAFE_RIGHT = 45;
 
     public static int ELEVATOR_HOLD_ITERATIONS = 40;
+
+    public static int PARKING_FORWARD = 4;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -110,5 +113,9 @@ public class RedRightMedJunction extends LinearOpMode {
         }
 
         drivetrain.followTrajectory(park_strafe);
+
+        Trajectory parkingForward = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).forward(PARKING_FORWARD).build();
+        drivetrain.followTrajectory(parkingForward);
+
     }
 }
