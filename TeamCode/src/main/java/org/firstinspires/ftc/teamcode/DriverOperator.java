@@ -25,7 +25,6 @@ public class DriverOperator extends OpMode {
     DcMotor Elevator = null;
     DcMotor Slider = null;
 
-
     Servo Arm = null;
     Servo Grabber = null;
 
@@ -138,14 +137,10 @@ public class DriverOperator extends OpMode {
             GrabberPos = 0.01;
         }
         if (gamepad2.right_bumper){
-            GrabberPos = .3;
+            GrabberPos = .4;
         }
         Grabber.setPosition(GrabberPos);
 
         telemetry.log().add("elevator distance is "+ Elevator.getCurrentPosition());
-
-
-
     }
-
 }

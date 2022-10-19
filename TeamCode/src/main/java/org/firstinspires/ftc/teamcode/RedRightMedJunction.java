@@ -23,7 +23,7 @@ public class RedRightMedJunction extends LinearOpMode {
 
     public static int STEP8_BACK = 8;
 
-    public static int PARKING_ONE_STRAFE_LEFT = 6;
+    public static int PARKING_ONE_STRAFE_LEFT = 5;
     public static int PARKING_TWO_STRAFE_RIGHT = 21;
     public static int PARKING_THREE_STRAFE_RIGHT = 45;
 
