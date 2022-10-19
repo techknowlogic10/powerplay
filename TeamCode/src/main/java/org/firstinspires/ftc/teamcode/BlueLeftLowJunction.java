@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @Config
 public class BlueLeftLowJunction extends LinearOpMode {
 
-    public static Pose2d STARTING_POSITION = new Pose2d(37, 60, Math.toRadians(90));
+    public static Pose2d STARTING_POSITION = new Pose2d(37, 60, Math.toRadians(270));
 
     public static int JUNCTION_LEVEL = 1;
     public static double ARM_POSITION = 0.22;
