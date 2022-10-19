@@ -18,7 +18,7 @@ public class RedLeftLowJunction extends LinearOpMode {
     public static double ARM_POSITION = 0.22;
 
     public static int STEP1_STRAFE_LEFT = 20;
-    public static int STEP2_FORWARD = 34;
+    public static int STEP2_FORWARD = 35;
     public static int STEP3_STRAFE_RIGHT = 5;
 
     public static int STEP8_BACK = 8;
