@@ -1,34 +1,34 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp
-@Disabled
-public class DriverOperator extends OpMode {
+public class TeleOP_OCCRA extends OpMode {
     // Declare our motors
     // Make sure your ID's match your configuration
     DcMotor frontLeft = null;
     DcMotor frontRight = null;
     DcMotor backLeft = null;
     DcMotor backRight = null;
-    DcMotor Elevator = null;
+    DcMotor ELEVATOR = null;
     DcMotor Slider = null;
+    DcMotor elevator = null;
+
 
     Servo Arm = null;
     Servo Grabber = null;
+    Servo LeftEncoder = null;
+    Servo RightEncoder = null;
 
 
     DistanceSensor SliderDistance = null;
@@ -38,6 +38,9 @@ public class DriverOperator extends OpMode {
     double ArmPos = 0;
     double GrabberPos = 0;
     double Drivepower = 2;
+    double Sliderdistance = 0;
+    double SliderLimitFront = 0;
+    double ElevatorPower = 0;
     @Override
     public void init() {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
@@ -53,30 +56,44 @@ public class DriverOperator extends OpMode {
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        Elevator = hardwareMap.dcMotor.get("elevator");
-        Elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ELEVATOR = hardwareMap.dcMotor.get("elevator");
+        ELEVATOR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ELEVATOR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         Slider = hardwareMap.dcMotor.get("slider");
         SliderDistance = hardwareMap.get(DistanceSensor.class, "Slider Distance");
+        Slider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         Arm = hardwareMap.get(Servo.class, "arm");
+
         Arm.scaleRange(0, 1);
 
         Grabber = hardwareMap.get(Servo.class, "grabber");
 
+        LeftEncoder = hardwareMap.get(Servo.class, "LeftEncoder");
+        RightEncoder = hardwareMap.get(Servo.class, "RightEncoder");
+        RightEncoder.setDirection(Servo.Direction.REVERSE);
+        LeftEncoder.setPosition(1);
+        RightEncoder.setPosition(1.0);
+        telemetry.addLine("leftEncoder position" + LeftEncoder.getPosition());
+        telemetry.addLine("RightEncoder position" + RightEncoder.getPosition());
 
     }
 
     @Override
     public void loop() {
-        Drivepower = 2;
-        if (gamepad1.b){
-            Drivepower = 4;
+        ELEVATOR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Sliderdistance = SliderDistance.getDistance(DistanceUnit.CM);
+        Elevator elevator = new Elevator(hardwareMap);
+        Drivepower = 4;
+        if (gamepad1.right_trigger > 0.5){
+            Drivepower = 2.5;
         }
         if (gamepad1.left_stick_button){
             Drivepower = 1.5;
         }
+
+        telemetry.addLine("Slider is" + SliderDistance.getDistance(DistanceUnit.CM));
         double y = gamepad1.left_stick_y; // Remember, this is reversed!
         double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
         double rx = -gamepad1.right_stick_x;
@@ -95,21 +112,38 @@ public class DriverOperator extends OpMode {
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
 
-        Elevator.setPower(-gamepad2.right_stick_y);
+        ElevatorPower = gamepad2.right_stick_y;
+        if (gamepad2.right_trigger>.5){
+            ElevatorPower = ElevatorPower/2;
+        }
+
+        ELEVATOR.setPower(-ElevatorPower);
         if (gamepad2.dpad_down){
             ArmPos = 0;
+            Arm.setPosition(ArmPos);
         }
         if (gamepad2.dpad_up){
             ArmPos = .673564;
+            Arm.setPosition(ArmPos);
         }
         if (gamepad2.dpad_left){
             ArmPos = .321123;
+            Arm.setPosition(ArmPos);
         }
         if (gamepad2.dpad_right){
             ArmPos = 1;
+            Arm.setPosition(ArmPos);
         }
-        ArmPos = ArmPos + gamepad2.left_stick_x/1000;
-        Arm.setPosition(ArmPos);
+        if (gamepad2.left_stick_x>.1){
+            ArmPos = ArmPos + gamepad2.left_stick_x/100;
+            Arm.setPosition(ArmPos);
+        }
+        if (gamepad2.left_stick_x<-.1){
+            ArmPos = ArmPos + gamepad2.left_stick_x/100;
+            Arm.setPosition(ArmPos);
+        }
+
+
         if (gamepad1.right_bumper){
             SliderSpeed = -1;
         } else if (gamepad1.left_bumper) {
@@ -123,7 +157,25 @@ public class DriverOperator extends OpMode {
         if (gamepad1.a){
             SliderSpeed = SliderSpeed/2;
         }
-        telemetry.log().add("Arm position ="+ ArmPos);
+        if (gamepad1.y){
+            SliderLimitFront = SliderDistance.getDistance(DistanceUnit.CM);
+        }
+        if (gamepad1.x){
+            SliderLimitFront = 0;
+        }
+        if (Sliderdistance <= SliderLimitFront){
+            if (SliderSpeed == 1){
+                SliderSpeed = 0;
+            }
+        }
+        if (Sliderdistance < SliderLimitFront){
+            Slider.setPower(-1);
+        }
+        if (Sliderdistance == SliderLimitFront){
+            SliderSpeed = 0;
+        }
+        telemetry.addLine("Arm position ="+ ArmPos);
+        telemetry.addLine("Slider Limit is"+ SliderLimitFront);
 
         Slider.setPower(SliderSpeed);
 
@@ -143,6 +195,29 @@ public class DriverOperator extends OpMode {
         }
         Grabber.setPosition(GrabberPos);
 
-        telemetry.log().add("elevator distance is "+ Elevator.getCurrentPosition());
+
+
+        if (gamepad1.left_trigger>.5 && gamepad1.right_trigger>.5){
+            elevator.goToLevel(1);
+            Arm.setPosition(.533);
+            while (SliderDistance.getDistance(DistanceUnit.CM) > 9.5){
+                Slider.setPower(.5);
+
+            }
+            while (SliderDistance.getDistance(DistanceUnit.CM) < 9.5){
+                Slider.setPower(-.5);
+
+
+            }
+
+            telemetry.update();
+
+
+
+        }
+
+
+
     }
+
 }
