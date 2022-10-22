@@ -15,7 +15,7 @@ public class BlueLeftLowJunction extends LinearOpMode {
     public static Pose2d STARTING_POSITION = new Pose2d(37, 60, Math.toRadians(270));
 
     public static int JUNCTION_LEVEL = 1;
-    public static double ARM_POSITION = 0.22;
+    public static double ARM_POSITION = 0.23;
 
     public static int STEP1_STRAFE_LEFT = 20;
     public static int STEP2_FORWARD = 35;
@@ -26,6 +26,8 @@ public class BlueLeftLowJunction extends LinearOpMode {
     public static int PARKING_ONE_STRAFE_LEFT = 6;
     public static int PARKING_TWO_STRAFE_RIGHT = 21;
     public static int PARKING_THREE_STRAFE_RIGHT = 45;
+
+    public static int PARKING_FORWARD = 4;
 
     public static int ELEVATOR_HOLD_SECONDS = 40;
 
@@ -108,5 +110,8 @@ public class BlueLeftLowJunction extends LinearOpMode {
         }
 
         drivetrain.followTrajectory(park_strafe);
+
+        Trajectory parkingForward = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).forward(PARKING_FORWARD).build();
+        drivetrain.followTrajectory(parkingForward);
     }
 }

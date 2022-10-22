@@ -15,7 +15,7 @@ public class BlueRightMedJunction extends LinearOpMode {
     public static Pose2d STARTING_POSITION = new Pose2d(-37, 60, Math.toRadians(270));
 
     public static int JUNCTION_LEVEL = 2;
-    public static double ARM_POSITION = 0.22;
+    public static double ARM_POSITION = 0.23;
 
     public static int STEP1_STRAFE_LEFT = 20;
     public static int STEP2_FORWARD = 35;
