@@ -1,30 +1,29 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Config
-public abstract class BaseAutonomous extends LinearOpMode {
+@Autonomous
+public class RedRight2 extends LinearOpMode {
 
-    public static double ARM_POSITION = 0.23;
-
-    public static int STEP1_STRAFE_LEFT = 20;
-    public static int STEP2_FORWARD = 35;
-    public static int STEP3_STRAFE_RIGHT = 6;
-
-    public static int STEP8_BACK = 8;
-
-    public static int PARKING_ONE_STRAFE_LEFT = 5;
-    public static int PARKING_TWO_STRAFE_RIGHT = 21;
-    public static int PARKING_THREE_STRAFE_RIGHT = 45;
-
+    public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
+    public static int JUNCTION_LEVEL = 1;
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
+    public static double ARM_POSITION = 0.5;
 
-    public static int PARKING_FORWARD = 4;
+    public static int STEP1_STRAFE_RIGHT = 20;
+    public static int STEP2_FORWARD = 35;
+    public static int STEP3_STRAFE_LEFT = 6;
+
+    public static int PARKING_ONE_STRAFE_LEFT = 25;
+    public static int PARKING_TWO_STRAFE_RIGHT = 2;
+    public static int PARKING_THREE_STRAFE_RIGHT = 25;
+
+    public static int PARKING_BACK = 4;
 
 
     @Override
@@ -34,9 +33,7 @@ public abstract class BaseAutonomous extends LinearOpMode {
         detector.startDetection();
 
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
-        drivetrain.setPoseEstimate(getStartingPosition());
-
-        //Step 0 -- grab preloaded cone
+        drivetrain.setPoseEstimate(STARTING_POSITION);
 
         Elevator elevator = new Elevator(hardwareMap);
         Arm arm = new Arm(hardwareMap);
@@ -46,10 +43,11 @@ public abstract class BaseAutonomous extends LinearOpMode {
         EncoderLift encoderLift = new EncoderLift(hardwareMap);
         encoderLift.lower();
 
-        Trajectory step1_strafeLeft = drivetrain.trajectoryBuilder(getStartingPosition()).strafeLeft(STEP1_STRAFE_LEFT).build();
-        Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeLeft.end()).forward(STEP2_FORWARD).build();
-        Trajectory step3_strafeRight = drivetrain.trajectoryBuilder(step2_forward.end()).strafeRight(STEP3_STRAFE_RIGHT).build();
-        Trajectory step8_back = drivetrain.trajectoryBuilder(step3_strafeRight.end()).back(STEP8_BACK).build();
+        Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(STARTING_POSITION).strafeRight(STEP1_STRAFE_RIGHT).build();
+        Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeRight.end()).forward(STEP2_FORWARD).build();
+        Trajectory step3_strafeLeft = drivetrain.trajectoryBuilder(step2_forward.end()).strafeLeft(STEP3_STRAFE_LEFT).build();
+
+        elevator.goToLevel(0);
 
         while(opModeInInit()) {
             telemetry.addLine("Parking position is " + detector.getSignalPosition());
@@ -62,19 +60,17 @@ public abstract class BaseAutonomous extends LinearOpMode {
         int parkingPosition = detector.getSignalPosition();
         telemetry.log().add("Parking position is " + parkingPosition);
 
-        elevator.goToLevel(0);
-
-        //Step 1 - Strafe Left
-        drivetrain.followTrajectory(step1_strafeLeft);
+        //Step 1 - Strafe Right
+        drivetrain.followTrajectory(step1_strafeRight);
 
         //Step 2 - Forward
         drivetrain.followTrajectory(step2_forward);
 
-        //Step 3 - Strafe Right
-        drivetrain.followTrajectory(step3_strafeRight);
+        //Step 3 - Strafe Left
+        drivetrain.followTrajectory(step3_strafeLeft);
 
         //step-4 elevator up
-        elevator.goToLevel(getJunctionLevel());
+        elevator.goToLevel(JUNCTION_LEVEL);
         sleep(1000);
         elevator.holdElevator(ELEVATOR_HOLD_ITERATIONS);
 
@@ -89,17 +85,13 @@ public abstract class BaseAutonomous extends LinearOpMode {
         //step7 - move arm to home position
         arm.goHome();
 
-        //step8 - back
-        drivetrain.followTrajectory(step8_back);
-
-        //step 9 - move elevator to home
+        //step 8 - move elevator to home
         elevator.goToHome();
 
-        //step10 - park
+        //step 9 - park
         parkRobot(parkingPosition, drivetrain);
 
-        //step 11 - park to make teleop easy (turn 180) //TODO
-
+        //step 10 - raise encoders for teleop
         encoderLift.raise();
     }
 
@@ -117,13 +109,7 @@ public abstract class BaseAutonomous extends LinearOpMode {
 
         drivetrain.followTrajectory(park_strafe);
 
-        Trajectory parkingForward = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).forward(PARKING_FORWARD).build();
-        drivetrain.followTrajectory(parkingForward);
-
+        Trajectory parkingBack = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).back(PARKING_BACK).build();
+        drivetrain.followTrajectory(parkingBack);
     }
-
-    public abstract Pose2d getStartingPosition();
-
-    public abstract int getJunctionLevel();
-
 }
