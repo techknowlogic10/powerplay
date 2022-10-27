@@ -1,27 +1,35 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 
 @Autonomous
+@Config
+
 public class RedRight2 extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
     public static int JUNCTION_LEVEL = 1;
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
-    public static double ARM_POSITION = 0.5;
+    public static double ARM_POSITION = 1;
 
-    public static int STEP1_STRAFE_RIGHT = 20;
-    public static int STEP2_FORWARD = 35;
-    public static int STEP3_STRAFE_LEFT = 6;
+    public static int STEP1_STRAFE_RIGHT = 25;
+    public static int STEP2_FORWARD = 42;
+    public static int STEP3_STRAFE_LEFT = 4;
+    public static int STEP4_STRAFE_RIGHT = 2;
+    public static int STEP5_FORWARD = 10;
 
-    public static int PARKING_ONE_STRAFE_LEFT = 25;
-    public static int PARKING_TWO_STRAFE_RIGHT = 2;
-    public static int PARKING_THREE_STRAFE_RIGHT = 25;
+
+
+    public static int PARKING_ONE_STRAFE_LEFT = 45;
+    public static int PARKING_TWO_STRAFE_LEFT = 20;
+    public static int PARKING_THREE_STRAFE_RIGHT = 2;
 
     public static int PARKING_BACK = 4;
 
@@ -43,18 +51,20 @@ public class RedRight2 extends LinearOpMode {
         EncoderLift encoderLift = new EncoderLift(hardwareMap);
         encoderLift.lower();
 
+
         Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(STARTING_POSITION).strafeRight(STEP1_STRAFE_RIGHT).build();
         Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeRight.end()).forward(STEP2_FORWARD).build();
         Trajectory step3_strafeLeft = drivetrain.trajectoryBuilder(step2_forward.end()).strafeLeft(STEP3_STRAFE_LEFT).build();
+        Trajectory step4_strafeRight = drivetrain.trajectoryBuilder(step3_strafeLeft.end()).strafeRight(STEP4_STRAFE_RIGHT).build();
+        Trajectory step5_forward = drivetrain.trajectoryBuilder(step4_strafeRight.end()).forward(STEP5_FORWARD).build();
 
-        elevator.goToLevel(0);
 
         while(opModeInInit()) {
             telemetry.addLine("Parking position is " + detector.getSignalPosition());
             telemetry.update();
         }
-
         waitForStart();
+        elevator.goToLevel(0);
 
         //scan here to get parking position
         int parkingPosition = detector.getSignalPosition();
@@ -84,15 +94,16 @@ public class RedRight2 extends LinearOpMode {
 
         //step7 - move arm to home position
         arm.goHome();
+        //step4 - move toward cone stack
 
         //step 8 - move elevator to home
+        sleep(1000);
         elevator.goToHome();
-
-        //step 9 - park
+        drivetrain.followTrajectory(step4_strafeRight);
+        drivetrain.followTrajectory(step5_forward);
+        //step10 - park
         parkRobot(parkingPosition, drivetrain);
 
-        //step 10 - raise encoders for teleop
-        encoderLift.raise();
     }
 
     private void parkRobot(int parkingPosition, SampleMecanumDrive drivetrain) {
@@ -102,14 +113,15 @@ public class RedRight2 extends LinearOpMode {
         if(parkingPosition == 1) {
             park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeLeft(PARKING_ONE_STRAFE_LEFT).build();
         } else if(parkingPosition == 2) {
-            park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(PARKING_TWO_STRAFE_RIGHT).build();
+            park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeLeft(PARKING_TWO_STRAFE_LEFT).build();
         } else {
             park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(PARKING_THREE_STRAFE_RIGHT).build();
         }
 
         drivetrain.followTrajectory(park_strafe);
-
         Trajectory parkingBack = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).back(PARKING_BACK).build();
         drivetrain.followTrajectory(parkingBack);
+
+
     }
 }
