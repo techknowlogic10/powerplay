@@ -25,8 +25,6 @@ public class RedRight2 extends LinearOpMode {
     public static int STEP4_STRAFE_RIGHT = 2;
     public static int STEP5_FORWARD = 10;
 
-
-
     public static int PARKING_ONE_STRAFE_LEFT = 45;
     public static int PARKING_TWO_STRAFE_LEFT = 20;
     public static int PARKING_THREE_STRAFE_RIGHT = 2;
@@ -63,7 +61,9 @@ public class RedRight2 extends LinearOpMode {
             telemetry.addLine("Parking position is " + detector.getSignalPosition());
             telemetry.update();
         }
+
         waitForStart();
+
         elevator.goToLevel(0);
 
         //scan here to get parking position
@@ -93,12 +93,14 @@ public class RedRight2 extends LinearOpMode {
         elevator.holdElevator(20);
 
         //step7 - move arm to home position
+
         arm.goHome();
         //step4 - move toward cone stack
 
         //step 8 - move elevator to home
         sleep(1000);
         elevator.goToHome();
+
         drivetrain.followTrajectory(step4_strafeRight);
         drivetrain.followTrajectory(step5_forward);
         //step10 - park
