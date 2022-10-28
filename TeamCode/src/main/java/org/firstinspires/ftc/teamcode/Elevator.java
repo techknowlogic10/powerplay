@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 @Config
 public class Elevator {
 
-    public static int LOW_JUNCTION_TICKS = 1000;
+    public static int LOW_JUNCTION_TICKS = 800;
     public static int MID_JUNCTION_TICKS = 1550;
     public static int HIGH_JUNCTION_TICKS = 2600;
 
@@ -31,9 +31,9 @@ public class Elevator {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        if(junctionLevel == 0) {
+        if (junctionLevel == 0) {
             goToPosition(300);
-        } else if(junctionLevel == 1) {
+        } else if (junctionLevel == 1) {
             goToPosition(LOW_JUNCTION_TICKS);
         } else if (junctionLevel == 2) {
             goToPosition(MID_JUNCTION_TICKS);
@@ -55,8 +55,8 @@ public class Elevator {
 
     }
 
-    public void holdElevator(int holdIterations){
-        for(int i=0; i<holdIterations ;i++){
+    public void holdElevator(int holdIterations) {
+        for (int i = 0; i < holdIterations; i++) {
             elevator.setPower(0.05);
             sleep(50);
         }

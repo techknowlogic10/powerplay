@@ -7,14 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.util.Encoder;
 
 @Autonomous
 @Config
 
-public class RedRight2 extends LinearOpMode {
+public class BlueRight2 extends LinearOpMode {
 
-    public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
+    public static Pose2d STARTING_POSITION = new Pose2d(-37, 60, Math.toRadians(270));
+
     public static int JUNCTION_LEVEL = 1;
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
     public static double ARM_POSITION = 1;
