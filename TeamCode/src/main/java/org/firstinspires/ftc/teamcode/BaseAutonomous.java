@@ -12,15 +12,15 @@ public abstract class BaseAutonomous extends LinearOpMode {
 
     public static double ARM_POSITION = 0.23;
 
-    public static int STEP1_STRAFE_LEFT = 20;
+    public static int STEP1_STRAFE_LEFT = 23;
     public static int STEP2_FORWARD = 35;
-    public static int STEP3_STRAFE_RIGHT = 6;
+    public static int STEP3_STRAFE_RIGHT = 7;
 
     public static int STEP8_BACK = 8;
 
-    public static int PARKING_ONE_STRAFE_LEFT = 5;
-    public static int PARKING_TWO_STRAFE_RIGHT = 21;
-    public static int PARKING_THREE_STRAFE_RIGHT = 45;
+    public static int PARKING_ONE_STRAFE_LEFT = 8;
+    public static int PARKING_TWO_STRAFE_RIGHT = 23;
+    public static int PARKING_THREE_STRAFE_RIGHT = 50;
 
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
 
