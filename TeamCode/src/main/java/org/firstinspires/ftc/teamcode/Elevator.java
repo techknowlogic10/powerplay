@@ -12,6 +12,7 @@ public class Elevator {
     public static int LOW_JUNCTION_TICKS = 800;
     public static int MID_JUNCTION_TICKS = 1550;
     public static int HIGH_JUNCTION_TICKS = 2600;
+    public static int TICK_DROP_BEFORE_RELEASE = 100;
 
     private HardwareMap hardwareMap;
     DcMotor elevator = null;
@@ -75,6 +76,16 @@ public class Elevator {
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setPower(1.0);
 
+        while (elevator.isBusy()) {
+            sleep(50);
+        }
+    }
+
+    public void dropBeforeRelease() {
+        int currentTicks = elevator.getCurrentPosition();
+        elevator.setTargetPosition(currentTicks - TICK_DROP_BEFORE_RELEASE);
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setPower(1.0);
         while (elevator.isBusy()) {
             sleep(50);
         }

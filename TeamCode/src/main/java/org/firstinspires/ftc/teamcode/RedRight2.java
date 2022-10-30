@@ -85,8 +85,10 @@ public class RedRight2 extends LinearOpMode {
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
+
         elevator.holdElevator(ELEVATOR_HOLD_ITERATIONS);
 
+        elevator.dropBeforeRelease();
         //sto6 - grabber releases the cone
         grabber.release();
         elevator.holdElevator(20);
