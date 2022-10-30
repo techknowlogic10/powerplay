@@ -26,7 +26,6 @@ public abstract class BaseAutonomous extends LinearOpMode {
 
     public static int PARKING_FORWARD = 4;
 
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -36,14 +35,12 @@ public abstract class BaseAutonomous extends LinearOpMode {
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
         drivetrain.setPoseEstimate(getStartingPosition());
 
-        //Step 0 -- grab preloaded cone
-
         Elevator elevator = new Elevator(hardwareMap);
         Arm arm = new Arm(hardwareMap);
         Grabber grabber = new Grabber(hardwareMap);
+
+        //Step 0 -- grab preloaded cone
         grabber.pickup();
-
-
 
         Trajectory step1_strafeLeft = drivetrain.trajectoryBuilder(getStartingPosition()).strafeLeft(STEP1_STRAFE_LEFT).build();
         Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeLeft.end()).forward(STEP2_FORWARD).build();
@@ -98,12 +95,9 @@ public abstract class BaseAutonomous extends LinearOpMode {
         parkRobot(parkingPosition, drivetrain);
 
         //step 11 - park to make teleop easy (turn 180) //TODO
-
-
     }
 
     private void parkRobot(int parkingPosition, SampleMecanumDrive drivetrain) {
-
         Trajectory park_strafe = null;
 
         if(parkingPosition == 1) {
@@ -118,7 +112,6 @@ public abstract class BaseAutonomous extends LinearOpMode {
 
         Trajectory parkingForward = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).forward(PARKING_FORWARD).build();
         drivetrain.followTrajectory(parkingForward);
-
     }
 
     public abstract Pose2d getStartingPosition();

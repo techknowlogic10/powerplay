@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Autonomous
 @Config
-
 public class BlueRight2 extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(-37, 60, Math.toRadians(270));
@@ -31,7 +30,6 @@ public class BlueRight2 extends LinearOpMode {
 
     public static int PARKING_BACK = 12;
 
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -46,17 +44,13 @@ public class BlueRight2 extends LinearOpMode {
         Grabber grabber = new Grabber(hardwareMap);
         grabber.pickup();
 
-        //EncoderLift encoderLift = new EncoderLift(hardwareMap);
-        //encoderLift.lower();
-
         Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(STARTING_POSITION).strafeRight(STEP1_STRAFE_RIGHT).build();
         Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeRight.end()).forward(STEP2_FORWARD).build();
         Trajectory step3_strafeLeft = drivetrain.trajectoryBuilder(step2_forward.end()).strafeLeft(STEP3_STRAFE_LEFT).build();
         Trajectory step4_strafeRight = drivetrain.trajectoryBuilder(step3_strafeLeft.end()).strafeRight(STEP4_STRAFE_RIGHT).build();
         Trajectory step5_forward = drivetrain.trajectoryBuilder(step4_strafeRight.end()).forward(STEP5_FORWARD).build();
 
-
-        while(opModeInInit()) {
+        while (opModeInInit()) {
             telemetry.addLine("Parking position is " + detector.getSignalPosition());
             telemetry.update();
         }
@@ -92,9 +86,7 @@ public class BlueRight2 extends LinearOpMode {
         elevator.holdElevator(20);
 
         //step7 - move arm to home position
-
         arm.goHome();
-        //step4 - move toward cone stack
 
         //step 8 - move elevator to home
         sleep(1000);
@@ -102,18 +94,17 @@ public class BlueRight2 extends LinearOpMode {
 
         drivetrain.followTrajectory(step4_strafeRight);
         drivetrain.followTrajectory(step5_forward);
-        //step10 - park
-        parkRobot(parkingPosition, drivetrain);
 
+        parkRobot(parkingPosition, drivetrain);
     }
 
     private void parkRobot(int parkingPosition, SampleMecanumDrive drivetrain) {
 
         Trajectory park_strafe = null;
 
-        if(parkingPosition == 1) {
+        if (parkingPosition == 1) {
             park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeLeft(PARKING_ONE_STRAFE_LEFT).build();
-        } else if(parkingPosition == 2) {
+        } else if (parkingPosition == 2) {
             park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeLeft(PARKING_TWO_STRAFE_LEFT).build();
         } else {
             park_strafe = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).strafeRight(PARKING_THREE_STRAFE_RIGHT).build();
@@ -123,7 +114,5 @@ public class BlueRight2 extends LinearOpMode {
 
         Trajectory parkingBack = drivetrain.trajectoryBuilder(drivetrain.getPoseEstimate()).back(PARKING_BACK).build();
         drivetrain.followTrajectory(parkingBack);
-
-
     }
 }
