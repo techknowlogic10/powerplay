@@ -26,7 +26,7 @@ public class RedRight2 extends LinearOpMode {
     public static int STEP5_FORWARD = 8;
 
     public static int PARKING_ONE_STRAFE_LEFT = 52;
-    public static int PARKING_TWO_STRAFE_LEFT = 20;
+    public static int PARKING_TWO_STRAFE_LEFT = 25;
     public static int PARKING_THREE_STRAFE_RIGHT = 2;
 
     public static int PARKING_BACK = 12;
