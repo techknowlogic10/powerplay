@@ -17,13 +17,13 @@ public class RedRight2 extends LinearOpMode {
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
     public static int JUNCTION_LEVEL = 1;
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
-    public static double ARM_POSITION = 1;
+    public static double ARM_POSITION = 0.98;
 
     public static int STEP1_STRAFE_RIGHT = 33;
     public static int STEP2_FORWARD = 42;
-    public static int STEP3_STRAFE_LEFT = 6;
+    public static int STEP3_STRAFE_LEFT = 5;
     public static int STEP4_STRAFE_RIGHT = 2;
-    public static int STEP5_FORWARD = 10;
+    public static int STEP5_FORWARD = 8;
 
     public static int PARKING_ONE_STRAFE_LEFT = 50;
     public static int PARKING_TWO_STRAFE_LEFT = 20;
