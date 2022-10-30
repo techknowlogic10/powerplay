@@ -21,7 +21,7 @@ public class RedRight2 extends LinearOpMode {
 
     public static int STEP1_STRAFE_RIGHT = 33;
     public static int STEP2_FORWARD = 42;
-    public static int STEP3_STRAFE_LEFT = 4;
+    public static int STEP3_STRAFE_LEFT = 6;
     public static int STEP4_STRAFE_RIGHT = 2;
     public static int STEP5_FORWARD = 10;
 
@@ -88,7 +88,7 @@ public class RedRight2 extends LinearOpMode {
 
         elevator.holdElevator(ELEVATOR_HOLD_ITERATIONS);
 
-        elevator.dropBeforeRelease();
+
         //sto6 - grabber releases the cone
         grabber.release();
         elevator.holdElevator(20);
