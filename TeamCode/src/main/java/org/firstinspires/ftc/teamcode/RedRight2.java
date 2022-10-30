@@ -19,17 +19,17 @@ public class RedRight2 extends LinearOpMode {
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
     public static double ARM_POSITION = 1;
 
-    public static int STEP1_STRAFE_RIGHT = 25;
+    public static int STEP1_STRAFE_RIGHT = 33;
     public static int STEP2_FORWARD = 42;
     public static int STEP3_STRAFE_LEFT = 4;
     public static int STEP4_STRAFE_RIGHT = 2;
     public static int STEP5_FORWARD = 10;
 
-    public static int PARKING_ONE_STRAFE_LEFT = 45;
+    public static int PARKING_ONE_STRAFE_LEFT = 50;
     public static int PARKING_TWO_STRAFE_LEFT = 20;
     public static int PARKING_THREE_STRAFE_RIGHT = 2;
 
-    public static int PARKING_BACK = 2;
+    public static int PARKING_BACK = 12;
 
 
     @Override

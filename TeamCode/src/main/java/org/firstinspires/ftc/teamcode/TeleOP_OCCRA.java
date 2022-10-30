@@ -29,7 +29,8 @@ public class TeleOP_OCCRA extends OpMode {
     Servo Grabber = null;
     Servo LeftEncoder = null;
     Servo RightEncoder = null;
-
+    Servo RCG = null;
+    Servo LCG = null;
 
     DistanceSensor SliderDistance = null;
 
@@ -41,6 +42,9 @@ public class TeleOP_OCCRA extends OpMode {
     double Sliderdistance = 0;
     double SliderLimitFront = 0;
     double ElevatorPower = 0;
+    double LCGPos =  0.9036276;
+    double RCGPos =  0.34348196;
+
     @Override
     public void init() {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
@@ -72,6 +76,10 @@ public class TeleOP_OCCRA extends OpMode {
 
         LeftEncoder = hardwareMap.get(Servo.class, "LeftEncoder");
         RightEncoder = hardwareMap.get(Servo.class, "RightEncoder");
+
+        LCG = hardwareMap.get(Servo.class, "LeftConeGrabber");
+        RCG = hardwareMap.get(Servo.class, "RightConeGrabber");
+
         RightEncoder.setDirection(Servo.Direction.REVERSE);
         LeftEncoder.setPosition(1);
         RightEncoder.setPosition(1.0);
@@ -185,8 +193,16 @@ public class TeleOP_OCCRA extends OpMode {
         if (ArmPos > 1){
             ArmPos = 1;
         }
-
-
+        if (gamepad2.b){
+            LCGPos = 1.0;
+            RCGPos = 0.14570603;
+        }
+        if (gamepad2.a){
+            RCGPos = 0.34348196;
+            LCGPos = 0.9036276;
+        }
+        LCG.setPosition(LCGPos);
+        RCG.setPosition(RCGPos);
         if(gamepad2.left_bumper){
             GrabberPos = 0.01;
         }
@@ -210,12 +226,13 @@ public class TeleOP_OCCRA extends OpMode {
 
             }
 
-            telemetry.update();
 
 
 
         }
 
+
+        telemetry.update();
 
 
     }
