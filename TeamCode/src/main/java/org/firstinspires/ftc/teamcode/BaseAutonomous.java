@@ -43,8 +43,7 @@ public abstract class BaseAutonomous extends LinearOpMode {
         Grabber grabber = new Grabber(hardwareMap);
         grabber.pickup();
 
-        EncoderLift encoderLift = new EncoderLift(hardwareMap);
-        encoderLift.lower();
+
 
         Trajectory step1_strafeLeft = drivetrain.trajectoryBuilder(getStartingPosition()).strafeLeft(STEP1_STRAFE_LEFT).build();
         Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeLeft.end()).forward(STEP2_FORWARD).build();
@@ -100,7 +99,7 @@ public abstract class BaseAutonomous extends LinearOpMode {
 
         //step 11 - park to make teleop easy (turn 180) //TODO
 
-        encoderLift.raise();
+
     }
 
     private void parkRobot(int parkingPosition, SampleMecanumDrive drivetrain) {
