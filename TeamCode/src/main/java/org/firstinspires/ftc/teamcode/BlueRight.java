@@ -16,13 +16,15 @@ public class BlueRight extends LinearOpMode {
 
     public static int JUNCTION_LEVEL = 1;
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
-    public static double ARM_POSITION = 0.97;
+    public static double ARM_POSITION = 0.985;
 
     public static int STEP1_STRAFE_RIGHT = 33;
-    public static int STEP2_FORWARD = 42;
-    public static int STEP3_STRAFE_LEFT = 5;
-    public static int STEP4_STRAFE_RIGHT = 2;
-    public static int STEP5_FORWARD = 8;
+    public static int STEP2_FORWARD = 43;
+    public static int STEP3_STRAFE_LEFT = 6;
+    public static int STEP4_STRAFE_RIGHT = 3;
+    public static int STEP5_FORWARD = 7;
+
+
 
     public static int PARKING_ONE_STRAFE_LEFT = 52;
     public static int PARKING_TWO_STRAFE_LEFT = 25;
