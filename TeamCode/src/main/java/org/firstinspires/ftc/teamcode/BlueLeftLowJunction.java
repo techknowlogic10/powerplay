@@ -4,11 +4,11 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Red Left")
+@Autonomous
 @Config
-public class RedLeft extends BaseAutonomous {
+public class BlueLeftLowJunction extends BaseAutonomous {
 
-    public static Pose2d STARTING_POSITION = new Pose2d(-37, -60, Math.toRadians(90));
+    public static Pose2d STARTING_POSITION = new Pose2d(37, 60, Math.toRadians(270));
 
     public static int JUNCTION_LEVEL = 1;
 

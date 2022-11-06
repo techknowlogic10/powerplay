@@ -8,9 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "Red Right")
+@Autonomous
 @Config
-public class RedRight extends LinearOpMode {
+public class RedRightLowJunction extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
     public static int JUNCTION_LEVEL = 1;
