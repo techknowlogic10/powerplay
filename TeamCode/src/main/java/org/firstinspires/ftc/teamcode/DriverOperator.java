@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -29,8 +28,7 @@ public class DriverOperator extends OpMode {
     Servo Grabber = null;
     Servo LeftEncoder = null;
     Servo RightEncoder = null;
-    Servo RCG = null;
-    Servo LCG = null;
+
 
     DistanceSensor SliderDistance = null;
 
@@ -77,8 +75,6 @@ public class DriverOperator extends OpMode {
         LeftEncoder = hardwareMap.get(Servo.class, "LeftEncoder");
         RightEncoder = hardwareMap.get(Servo.class, "RightEncoder");
 
-        LCG = hardwareMap.get(Servo.class, "LeftConeGrabber");
-        RCG = hardwareMap.get(Servo.class, "RightConeGrabber");
 
         RightEncoder.setDirection(Servo.Direction.REVERSE);
         LeftEncoder.setPosition(1);
@@ -193,16 +189,7 @@ public class DriverOperator extends OpMode {
         if (ArmPos > 1){
             ArmPos = 1;
         }
-        if (gamepad2.b){
-            LCGPos = 1.0;
-            RCGPos = 0.14570603;
-        }
-        if (gamepad2.a){
-            RCGPos = 0.34348196;
-            LCGPos = 0.9036276;
-        }
-        LCG.setPosition(LCGPos);
-        RCG.setPosition(RCGPos);
+
         if(gamepad2.left_bumper){
             GrabberPos = 0.01;
         }
@@ -225,9 +212,16 @@ public class DriverOperator extends OpMode {
 
 
             }
+
+
+
+
         }
 
+
         telemetry.update();
+
+
     }
 
 }
