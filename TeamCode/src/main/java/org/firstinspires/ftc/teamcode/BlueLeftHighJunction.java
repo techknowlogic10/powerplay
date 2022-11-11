@@ -13,14 +13,15 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @Config
 public class BlueLeftHighJunction extends LinearOpMode {
 
-    public static Pose2d STARTING_POSITION = new Pose2d(-37, 60, Math.toRadians(90));
+    public static Pose2d STARTING_POSITION = new Pose2d(37, 60, Math.toRadians(180));
     public static int JUNCTION_LEVEL = 3;
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
-    public static double ARM_POSITION = 0.26;
+    public static double ARM_POSITION = 0.29;
 
     public static int STEP1_STRAFE_RIGHT = 30;
     public static int STEP2_FORWARD = 38;
     public static int STEP3_STRAFE_RIGHT = 4;
+    public static int STEP3A_STRAFE_LEFT = 4;
     public static int STEP4_BACK = 12;
 
     public static int PARKING_ONE_STRAFE_LEFT = 58;
@@ -46,6 +47,7 @@ public class BlueLeftHighJunction extends LinearOpMode {
         Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(STARTING_POSITION).strafeRight(STEP1_STRAFE_RIGHT).build();
         Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeRight.end()).forward(STEP2_FORWARD).build();
         Trajectory step3_strafeRight = drivetrain.trajectoryBuilder(step2_forward.end()).strafeRight(STEP3_STRAFE_RIGHT).build();
+        Trajectory step3a_strafeLeft = drivetrain.trajectoryBuilder(step3_strafeRight.end()).strafeLeft(STEP3A_STRAFE_LEFT).build();
         Trajectory step4_back = drivetrain.trajectoryBuilder(step3_strafeRight.end()).back(STEP4_BACK).build();
 
 
@@ -90,6 +92,8 @@ public class BlueLeftHighJunction extends LinearOpMode {
         //step 8 - move elevator to home
         sleep(1000);
         elevator.goToHome();
+
+        drivetrain.followTrajectory(step3a_strafeLeft);
 
         drivetrain.followTrajectory(step4_back);
 
