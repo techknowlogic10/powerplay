@@ -16,15 +16,15 @@ public class RedLeftHighJunction extends LinearOpMode {
     public static Pose2d STARTING_POSITION = new Pose2d(-37, -60, Math.toRadians(90));
     public static int JUNCTION_LEVEL = 3;
     public static int ELEVATOR_HOLD_ITERATIONS = 20;
-    public static double ARM_POSITION = 0.23;
+    public static double ARM_POSITION = 0.26;
 
-    public static int STEP1_STRAFE_RIGHT = 48;
-    public static int STEP2_FORWARD = 42;
-    public static int STEP3_STRAFE_RIGHT = 5;
-    public static int STEP4_BACK = 2;
+    public static int STEP1_STRAFE_RIGHT = 30;
+    public static int STEP2_FORWARD = 38;
+    public static int STEP3_STRAFE_RIGHT = 4;
+    public static int STEP4_BACK = 12;
 
-    public static int PARKING_ONE_STRAFE_LEFT = 52;
-    public static int PARKING_TWO_STRAFE_LEFT = 25;
+    public static int PARKING_ONE_STRAFE_LEFT = 58;
+    public static int PARKING_TWO_STRAFE_LEFT = 30;
     public static int PARKING_THREE_STRAFE_LEFT = 2;
 
     public static int PARKING_FORWARD = 4;
@@ -48,7 +48,6 @@ public class RedLeftHighJunction extends LinearOpMode {
         Trajectory step3_strafeRight = drivetrain.trajectoryBuilder(step2_forward.end()).strafeRight(STEP3_STRAFE_RIGHT).build();
         Trajectory step4_back = drivetrain.trajectoryBuilder(step3_strafeRight.end()).back(STEP4_BACK).build();
 
-        elevator.goToLevel(0);
 
         while (opModeInInit()) {
             telemetry.addLine("Parking position is " + detector.getSignalPosition());
@@ -56,6 +55,7 @@ public class RedLeftHighJunction extends LinearOpMode {
         }
 
         waitForStart();
+        elevator.goToLevel(0);
 
         //scan here to get parking position
         int parkingPosition = detector.getSignalPosition();
