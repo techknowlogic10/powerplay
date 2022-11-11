@@ -21,6 +21,7 @@ public class RedLeftHighJunction extends LinearOpMode {
     public static int STEP1_STRAFE_RIGHT = 30;
     public static int STEP2_FORWARD = 38;
     public static int STEP3_STRAFE_RIGHT = 4;
+    public static int STEP3A_STRAFE_LEFT = 6;
     public static int STEP4_BACK = 12;
 
     public static int PARKING_ONE_STRAFE_LEFT = 58;
@@ -46,6 +47,7 @@ public class RedLeftHighJunction extends LinearOpMode {
         Trajectory step1_strafeRight = drivetrain.trajectoryBuilder(STARTING_POSITION).strafeRight(STEP1_STRAFE_RIGHT).build();
         Trajectory step2_forward = drivetrain.trajectoryBuilder(step1_strafeRight.end()).forward(STEP2_FORWARD).build();
         Trajectory step3_strafeRight = drivetrain.trajectoryBuilder(step2_forward.end()).strafeRight(STEP3_STRAFE_RIGHT).build();
+        Trajectory step3a_strafeLeft = drivetrain.trajectoryBuilder(step3_strafeRight.end()).strafeLeft(STEP3A_STRAFE_LEFT).build();
         Trajectory step4_back = drivetrain.trajectoryBuilder(step3_strafeRight.end()).back(STEP4_BACK).build();
 
 
@@ -90,6 +92,8 @@ public class RedLeftHighJunction extends LinearOpMode {
         //step 8 - move elevator to home
         sleep(1000);
         elevator.goToHome();
+
+        drivetrain.followTrajectory(step3a_strafeLeft);
 
         drivetrain.followTrajectory(step4_back);
 
