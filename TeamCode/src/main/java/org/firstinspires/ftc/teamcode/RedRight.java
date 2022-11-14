@@ -127,7 +127,7 @@ public class RedRight extends LinearOpMode {
         elevatorThreadWorking = false;
         armThreadWorking = false;
 
-        //TODO repeat this
+        //TODO repeat this again
 
         //TODO park the robot
     }
