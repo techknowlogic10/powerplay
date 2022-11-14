@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Config
@@ -13,6 +11,11 @@ public class Elevator {
     public static int MID_JUNCTION_TICKS = 1550;
     public static int HIGH_JUNCTION_TICKS = 2600;
     public static int TICK_DROP_BEFORE_RELEASE = 100;
+
+    public static int INITIAL_RISE_TICKS = 300;
+
+    public static int TICKS_DOWN_TO_GO_TO_TOP_OF_STACK = 300;
+    public static int TICKS_DOWN_FROM_TOP_OF_STACK_FOR_EACH_CONE = 100;
 
     private HardwareMap hardwareMap;
     DcMotor elevator = null;
@@ -33,13 +36,28 @@ public class Elevator {
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if (junctionLevel == 0) {
-            goToPosition(300);
+            goToPosition(INITIAL_RISE_TICKS);
         } else if (junctionLevel == 1) {
             goToPosition(LOW_JUNCTION_TICKS);
         } else if (junctionLevel == 2) {
             goToPosition(MID_JUNCTION_TICKS);
         } else {
             goToPosition(HIGH_JUNCTION_TICKS);
+        }
+    }
+
+    public void goToStackPickup(int numberOfConesLeftInStack) {
+        int currentPosition = elevator.getCurrentPosition();
+
+        int ticksToGoDown = TICKS_DOWN_FROM_TOP_OF_STACK_FOR_EACH_CONE * (5 - numberOfConesLeftInStack);
+        int targetPosition = currentPosition - TICKS_DOWN_TO_GO_TO_TOP_OF_STACK - ticksToGoDown;
+
+        elevator.setTargetPosition(targetPosition);
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setPower(1.0);
+
+        while (elevator.isBusy()) {
+            sleep(50);
         }
     }
 
@@ -52,12 +70,17 @@ public class Elevator {
         while (elevator.isBusy()) {
             sleep(50);
         }
-
-
     }
 
     public void holdElevator(int holdIterations) {
         for (int i = 0; i < holdIterations; i++) {
+            elevator.setPower(0.05);
+            sleep(50);
+        }
+    }
+
+    public void holdElevatorForTicks(int desiredTicks) {
+        if(elevator.getCurrentPosition() < desiredTicks) {
             elevator.setPower(0.05);
             sleep(50);
         }
