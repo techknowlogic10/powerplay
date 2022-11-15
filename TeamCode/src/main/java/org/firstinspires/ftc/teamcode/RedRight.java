@@ -116,11 +116,13 @@ public class RedRight extends LinearOpMode {
         new Thread(elevatorThreadForStackPickup).start();
         new Thread(armThreadForStackPickup).start();
 
+        //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
+        //If so, we will NOT be parking..take a look at that
         while(sliderThreadWorking || elevatorThreadWorking || armThreadWorking) {
             sleep(50);
         }
 
-        grabber.release();
+        grabber.pickup();
         numberOfConesLeftInStack--;
 
         sliderThreadWorking = false;
