@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous
 @Config
-@Disabled
+
 public class ElevatorTest extends LinearOpMode {
 
-    public static int TEST_LEVEL = 1;
+    public static int TEST_LEVEL = 2;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -20,6 +20,10 @@ public class ElevatorTest extends LinearOpMode {
         waitForStart();
 
         elevator.goToLevel(TEST_LEVEL);
+
+        sleep(1000);
+
+        elevator.goToStackPickup(5);
 
 
     }

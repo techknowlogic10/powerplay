@@ -14,7 +14,7 @@ public class Elevator {
 
     public static int INITIAL_RISE_TICKS = 300;
 
-    public static int TICKS_DOWN_TO_GO_TO_TOP_OF_STACK = 300;
+    public static int TICKS_DOWN_TO_GO_TO_TOP_OF_STACK = 1200;
     public static int TICKS_DOWN_FROM_TOP_OF_STACK_FOR_EACH_CONE = 100;
 
     private HardwareMap hardwareMap;

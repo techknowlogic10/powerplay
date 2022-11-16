@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class RedRight extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
-    public static Pose2d CONE_DROP_POSITION = new Pose2d(40, 60, Math.toRadians(90));
+    public static Pose2d CONE_DROP_POSITION = new Pose2d(34,-15,Math.toRadians(15));
 
     public static int JUNCTION_LEVEL = 2;
-    public static double ARM_POSITION = 0.5;
+    public static double ARM_POSITION = .673564;
 
     private int numberOfConesLeftInStack = 5;
 
@@ -111,16 +111,19 @@ public class RedRight extends LinearOpMode {
         //release the preloaded cone
         grabber.release();
 
+        sleep(100);
         //additional cones drop
         new Thread(sliderThreadForStackPickup).start();
         new Thread(elevatorThreadForStackPickup).start();
         new Thread(armThreadForStackPickup).start();
 
         while(sliderThreadWorking || elevatorThreadWorking || armThreadWorking) {
+
+            //TODO robot gets stuck in this loop
             sleep(50);
         }
 
-        grabber.release();
+        grabber.pickup();
         numberOfConesLeftInStack--;
 
         sliderThreadWorking = false;
