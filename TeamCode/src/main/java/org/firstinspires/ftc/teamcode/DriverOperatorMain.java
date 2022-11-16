@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp
-public class DriverOperator extends OpMode {
+public class DriverOperatorMain extends OpMode {
     // Declare our motors
     // Make sure your ID's match your configuration
     DcMotor frontLeft = null;
@@ -197,8 +197,8 @@ telemetry.addLine("slider speed front is "+ SliderSpeedFront);
         }
 
         if (gamepad1.a){
-            SliderSpeedFront = SliderSpeedFront/2;
-            SliderSpeedRear = SliderSpeedRear/2;
+            SliderSpeedFront = .5;
+            SliderSpeedRear = -.5;
         }
 
         if (gamepad1.y){
