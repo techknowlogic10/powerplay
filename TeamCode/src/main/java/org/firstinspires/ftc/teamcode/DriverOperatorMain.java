@@ -164,7 +164,7 @@ public class DriverOperatorMain extends OpMode {
                     Slider.setPower(.1);
                     gamepad1.rumble(100);
             }else
-                Slider.setPower(SliderSpeedFront);
+                Slider.setPower(.8);
         } else if (gamepad1.left_bumper) {
             Slider.setPower(SliderSpeedRear);
         } else{
@@ -172,13 +172,13 @@ public class DriverOperatorMain extends OpMode {
         }
 
         if (gamepad1.dpad_right){
-            SliderSpeedFront = SliderSpeedFront + 0.1;
-            SliderSpeedRear = SliderSpeedRear - 0.1;
+            SliderSpeedFront = SliderSpeedFront + 0.05;
+            SliderSpeedRear = SliderSpeedRear - 0.05;
         }
 
         if (gamepad1.dpad_left){
-            SliderSpeedFront = SliderSpeedFront - 0.1;
-            SliderSpeedRear = SliderSpeedRear + 0.1;
+            SliderSpeedFront = SliderSpeedFront - 0.05;
+            SliderSpeedRear = SliderSpeedRear + 0.05;
         }
 telemetry.addLine("slider speed front is "+ SliderSpeedFront);
         telemetry.addLine("slider speed rear is "+ SliderSpeedRear);

@@ -139,6 +139,7 @@ public class DriverOperator extends OpMode {
         }
         if (gamepad2.dpad_up){
             ArmPos = .673564;
+            //681965
             Arm.setPosition(ArmPos);
         }
         if (gamepad2.dpad_left){
