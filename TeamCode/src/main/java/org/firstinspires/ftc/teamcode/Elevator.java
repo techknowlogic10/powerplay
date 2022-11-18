@@ -2,7 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Elevator {
@@ -19,6 +22,7 @@ public class Elevator {
 
     private HardwareMap hardwareMap;
     DcMotor elevator = null;
+    DistanceSensor elevatorSensor = null;
 
     //diameter of spool = 50mm
     //REV HEX 40:1..ticks per rev :''
@@ -26,8 +30,10 @@ public class Elevator {
     public Elevator(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         elevator = hardwareMap.dcMotor.get("elevator");
+        elevatorSensor = hardwareMap.get(DistanceSensor.class, "cone to arm sensor");
         //elevator.setDirection(DcMotorSimple.Direction.REVERSE);
     }
+
 
     public void goToLevel(int junctionLevel) {
 
@@ -49,17 +55,33 @@ public class Elevator {
     public void goToStackPickup(int numberOfConesLeftInStack) {
         int currentPosition = elevator.getCurrentPosition();
 
-        int ticksToGoDown = TICKS_DOWN_FROM_TOP_OF_STACK_FOR_EACH_CONE * (5 - numberOfConesLeftInStack);
-        int targetPosition = currentPosition - TICKS_DOWN_TO_GO_TO_TOP_OF_STACK - ticksToGoDown;
+   //     int ticksToGoDown = TICKS_DOWN_FROM_TOP_OF_STACK_FOR_EACH_CONE * (5 - numberOfConesLeftInStack);
+   //     int targetPosition = currentPosition - TICKS_DOWN_TO_GO_TO_TOP_OF_STACK - ticksToGoDown;
 
+        int targetPosition = ElevatorPositions.getStackLevelTicks(5);
+        elevator.setTargetPosition(targetPosition);
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setPower(0.5);
+
+        while (elevator.getCurrentPosition() < (targetPosition - 50) || elevator.getCurrentPosition() > (targetPosition + 50)) {
+            sleep(50);
+        }
+    }
+    public void prepareForPickup() {
+
+        int targetPosition = ElevatorPositions.getPrepareForPickup();
         elevator.setTargetPosition(targetPosition);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setPower(1.0);
 
-        while (elevator.isBusy()) {
+
+
+        while (elevator.getCurrentPosition() < (targetPosition - 50) || elevator.getCurrentPosition() > (targetPosition + 50)) {
             sleep(50);
         }
     }
+
+
 
     private void goToPosition(int desiredPosition) {
 

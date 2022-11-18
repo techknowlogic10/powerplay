@@ -66,7 +66,7 @@ public class RedRight extends LinearOpMode {
         Runnable elevatorThreadForStackPickup = new Runnable() {
             @Override
             public void run() {
-                elevator.goToStackPickup(numberOfConesLeftInStack);
+                elevator.prepareForPickup();
                 elevatorThreadWorking = false;
             }
         };
@@ -119,18 +119,34 @@ public class RedRight extends LinearOpMode {
 
         //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
         //If so, we will NOT be parking..take a look at that
-        while(sliderThreadWorking || elevatorThreadWorking || armThreadWorking) {
+        while(elevatorThreadWorking||sliderThreadWorking) {
 
             //TODO robot gets stuck in this loop
             sleep(50);
         }
 
+        elevator.goToStackPickup(numberOfConesLeftInStack);
+
+        sleep(500);
+
         grabber.pickup();
         numberOfConesLeftInStack--;
 
-        sliderThreadWorking = false;
-        elevatorThreadWorking = false;
-        armThreadWorking = false;
+        sliderThreadWorking = true;
+        elevatorThreadWorking = true;
+        armThreadWorking = true;
+
+        new Thread(elevatorThreadForPreloadDrop).start();
+        sleep(300);
+        new Thread(armThreadForPreloadDrop).start();
+        new Thread(sliderThreadForStackDrop).start();
+
+
+        while(elevatorThreadWorking||sliderThreadWorking) {
+
+            //TODO robot gets stuck in this loop
+            sleep(50);
+        }
 
         //TODO repeat this again
 

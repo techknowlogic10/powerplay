@@ -183,6 +183,7 @@ public class DriverOperator extends OpMode {
         }
 telemetry.addLine("slider speed front is "+ SliderSpeedFront);
         telemetry.addLine("slider speed rear is "+ SliderSpeedRear);
+        telemetry.addLine("slider distance" + SliderDistance.getDistance(DistanceUnit.CM));
         if (SliderSpeedFront >= 1){
             SliderSpeedFront = 1;
         }

@@ -18,9 +18,7 @@ public class Arm {
 
     public void move(double desiredArmPosition) {
 
-        while(arm.getPosition() < desiredArmPosition) {
-            arm.setPosition(arm.getPosition() + 0.001);
-        }
+        arm.setPosition(desiredArmPosition);
     }
 
     public void goHome() {

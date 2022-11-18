@@ -12,19 +12,38 @@ public class ElevatorTest extends LinearOpMode {
 
     public static int TEST_LEVEL = 2;
 
+    boolean elevatorThreadWorking = true;
     @Override
     public void runOpMode() throws InterruptedException {
 
         Elevator elevator = new Elevator(hardwareMap);
+        Runnable elevatorThreadForPreloadDrop = new Runnable() {
+            @Override
+            public void run() {
+                elevator.goToLevel(2);
+            }
+        };
 
+        Runnable elevatorThreadForStackPickup = new Runnable() {
+            @Override
+            public void run() {
+                elevator.goToStackPickup(5);
+                 elevatorThreadWorking = false;
+            }
+        };
         waitForStart();
 
-        elevator.goToLevel(TEST_LEVEL);
+        new Thread(elevatorThreadForPreloadDrop).start();
 
         sleep(1000);
 
-        elevator.goToStackPickup(5);
+        new Thread(elevatorThreadForStackPickup).start();
 
+        while (elevatorThreadWorking){
+            sleep(50);
+        }
+
+        sleep(2000);
 
     }
 }
