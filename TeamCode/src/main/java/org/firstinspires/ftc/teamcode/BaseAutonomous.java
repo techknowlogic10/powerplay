@@ -14,7 +14,7 @@ public abstract class BaseAutonomous extends LinearOpMode {
 
     public static int STEP1_STRAFE_LEFT = 23;
     public static int STEP2_FORWARD = 35;
-    public static int STEP3_STRAFE_RIGHT = 7;
+    public static int STEP3_STRAFE_RIGHT = 4;
 
     public static int STEP8_BACK = 8;
 
