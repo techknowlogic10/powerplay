@@ -10,9 +10,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Config
 public class Elevator {
 
-    public static int LOW_JUNCTION_TICKS = 750;
-    public static int MID_JUNCTION_TICKS = 1550;
-    public static int HIGH_JUNCTION_TICKS = 2600;
     public static int TICK_DROP_BEFORE_RELEASE = 100;
 
     public static int INITIAL_RISE_TICKS = 300;
@@ -44,21 +41,18 @@ public class Elevator {
         if (junctionLevel == 0) {
             goToPosition(INITIAL_RISE_TICKS);
         } else if (junctionLevel == 1) {
-            goToPosition(LOW_JUNCTION_TICKS);
+            goToPosition(ElevatorPositions.getLowJunctionTicks());
         } else if (junctionLevel == 2) {
-            goToPosition(MID_JUNCTION_TICKS);
+            goToPosition(ElevatorPositions.getMediumJunctionTicks());
         } else {
-            goToPosition(HIGH_JUNCTION_TICKS);
+            goToPosition(ElevatorPositions.getHighJunctionTicks());
         }
     }
 
     public void goToStackPickup(int numberOfConesLeftInStack) {
-        int currentPosition = elevator.getCurrentPosition();
 
-   //     int ticksToGoDown = TICKS_DOWN_FROM_TOP_OF_STACK_FOR_EACH_CONE * (5 - numberOfConesLeftInStack);
-   //     int targetPosition = currentPosition - TICKS_DOWN_TO_GO_TO_TOP_OF_STACK - ticksToGoDown;
 
-        int targetPosition = ElevatorPositions.getStackLevelTicks(5);
+        int targetPosition = ElevatorPositions.getStackLevelTicks(numberOfConesLeftInStack);
         elevator.setTargetPosition(targetPosition);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setPower(0.5);

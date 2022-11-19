@@ -85,6 +85,7 @@ public class RedRight extends LinearOpMode {
             @Override
             public void run() {
                 slider.goToHome();
+                sliderThreadWorking = false;
             }
         };
 
@@ -122,8 +123,6 @@ public class RedRight extends LinearOpMode {
         //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
         //If so, we will NOT be parking..take a look at that
         while(elevatorThreadWorking||sliderThreadWorking) {
-
-            //TODO robot gets stuck in this loop
             sleep(50);
         }
 
