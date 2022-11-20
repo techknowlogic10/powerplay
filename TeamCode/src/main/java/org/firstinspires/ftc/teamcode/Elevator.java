@@ -28,6 +28,7 @@ public class Elevator {
         this.hardwareMap = hardwareMap;
         elevator = hardwareMap.dcMotor.get("elevator");
         elevatorSensor = hardwareMap.get(DistanceSensor.class, "cone to arm sensor");
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //elevator.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
@@ -35,7 +36,6 @@ public class Elevator {
     public void goToLevel(int junctionLevel) {
 
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if (junctionLevel == 0) {
@@ -57,7 +57,7 @@ public class Elevator {
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setPower(0.5);
 
-        while (elevator.getCurrentPosition() < (targetPosition - 50) || elevator.getCurrentPosition() > (targetPosition + 50)) {
+        while (elevator.isBusy()) {
             sleep(50);
         }
     }
@@ -70,7 +70,7 @@ public class Elevator {
 
 
 
-        while (elevator.getCurrentPosition() < (targetPosition - 50) || elevator.getCurrentPosition() > (targetPosition + 50)) {
+        while (elevator.isBusy()) {
             sleep(50);
         }
     }
@@ -126,7 +126,7 @@ public class Elevator {
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setPower(1.0);
         while (elevator.isBusy()) {
-            sleep(50);
+            sleep(25);
         }
     }
 }

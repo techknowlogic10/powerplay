@@ -27,12 +27,13 @@ public class SliderTest extends LinearOpMode {
             @Override
             public void run() {
                 slider.goToHome();
+                sliderThreadWorking = false;
             }
         };
 
         waitForStart();
 
-        new Thread(sliderThreadForStackPickup).start();
+        new Thread(sliderThreadForStackDrop).start();
 
 
         while (sliderThreadWorking){

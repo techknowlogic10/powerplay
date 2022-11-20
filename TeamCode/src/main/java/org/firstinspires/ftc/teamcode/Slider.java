@@ -14,7 +14,8 @@ public class Slider {
     public static int HOME_TICKS = 750;
     public static int FULL_EXTENSION_TICKS = 100;
     public static int HOME_DISTANCE_CM = 10;
-    public static int EXTENDED_DISTANCE_CM = 53;
+    public static double EXTENDED_DISTANCE_CM = 54.5;
+    public static double SLIDER_SPEED = 0.8;
 
     private HardwareMap hardwareMap;
     DcMotor slider = null;
@@ -29,7 +30,7 @@ public class Slider {
 
     public void goToHome() {
         while (SliderDistance.getDistance(DistanceUnit.CM) > HOME_DISTANCE_CM) {
-            slider.setPower(-1.0);
+            slider.setPower(-SLIDER_SPEED);
             sleep(25);
         }
 
@@ -40,11 +41,11 @@ public class Slider {
 
 
         while (SliderDistance.getDistance(DistanceUnit.CM) < EXTENDED_DISTANCE_CM) {
-            slider.setPower(1.0);
-            sleep(25);
+            slider.setPower(SLIDER_SPEED);
+            sleep(15);
         }
 
-        slider.setPower(0);
+        slider.setPower(0.1);
 
     }
 

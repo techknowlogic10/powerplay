@@ -8,15 +8,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-@Autonomous
+@Autonomous (name = "Red Right States")
 @Config
-@Disabled
 public class RedRight extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
-    public static Pose2d CONE_DROP_POSITION = new Pose2d(34,-15,Math.toRadians(15));
+    public static Pose2d MID_WAY = new Pose2d(34.5,-40,Math.toRadians(15));
+    public static Pose2d CONE_DROP_POSITION = new Pose2d(34.5,-12,Math.toRadians(15));
 
     public static int JUNCTION_LEVEL = 2;
     public static double ARM_POSITION = .673564;
@@ -41,7 +42,7 @@ public class RedRight extends LinearOpMode {
         Grabber grabber = new Grabber(hardwareMap);
         Slider slider = new Slider(hardwareMap);
 
-        Trajectory positionToMedJunctionTrajectory = drivetrain.trajectoryBuilder(STARTING_POSITION).lineToLinearHeading(CONE_DROP_POSITION).build();
+        TrajectorySequence positionToMedJunctionTrajectory = drivetrain.trajectorySequenceBuilder(STARTING_POSITION).lineToLinearHeading(MID_WAY).lineToLinearHeading(CONE_DROP_POSITION).build();
 
         Runnable elevatorThreadForPreloadDrop = new Runnable() {
             @Override
@@ -89,7 +90,17 @@ public class RedRight extends LinearOpMode {
             }
         };
 
+        Runnable elevatorThreadForStackDrop = new Runnable() {
+            @Override
+            public void run() {
+                elevator.goToLevel(JUNCTION_LEVEL);
+                elevatorThreadWorking = false;
+            }
+        };
+
         grabber.pickup();
+
+        sleep(2000);
 
         //raise the elevator so that it will not be on its way to drivetrain
         elevator.goToLevel(0);
@@ -109,12 +120,17 @@ public class RedRight extends LinearOpMode {
 
         new Thread(elevatorThreadForPreloadDrop).start();
         new Thread(armThreadForPreloadDrop).start();
-        drivetrain.followTrajectory(positionToMedJunctionTrajectory);
+        drivetrain.followTrajectorySequence(positionToMedJunctionTrajectory);
 
+        elevator.dropBeforeRelease();
         //release the preloaded cone
         grabber.release();
 
-        sleep(100);
+        sleep(300);
+
+
+
+
         //additional cones drop
         new Thread(sliderThreadForStackPickup).start();
         new Thread(elevatorThreadForStackPickup).start();
@@ -126,6 +142,95 @@ public class RedRight extends LinearOpMode {
             sleep(50);
         }
 
+        arm.goHome();
+        elevator.goToStackPickup(numberOfConesLeftInStack);
+
+        sleep(300);
+
+        grabber.pickup();
+        numberOfConesLeftInStack--;
+
+        sliderThreadWorking = true;
+        elevatorThreadWorking = true;
+        armThreadWorking = true;
+
+        sleep(600);
+        new Thread(elevatorThreadForStackDrop).start();
+        sleep(300);
+        new Thread(armThreadForPreloadDrop).start();
+        new Thread(sliderThreadForStackDrop).start();
+
+
+        while(elevatorThreadWorking||sliderThreadWorking) {
+            sleep(50);
+        }
+
+
+        elevator.dropBeforeRelease();
+        grabber.release();
+        sleep(300);
+
+
+
+
+
+               //additional cones drop
+        new Thread(sliderThreadForStackPickup).start();
+        new Thread(elevatorThreadForStackPickup).start();
+        new Thread(armThreadForStackPickup).start();
+
+        //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
+        //If so, we will NOT be parking..take a look at that
+        while(elevatorThreadWorking||sliderThreadWorking) {
+            sleep(50);
+        }
+        sleep(1000);
+        arm.goHome();
+        elevator.goToStackPickup(numberOfConesLeftInStack);
+        sleep(300);
+
+        grabber.pickup();
+        numberOfConesLeftInStack--;
+
+        sliderThreadWorking = true;
+        elevatorThreadWorking = true;
+        armThreadWorking = true;
+
+        sleep(300);
+        new Thread(elevatorThreadForStackDrop).start();
+        sleep(300);
+        new Thread(armThreadForPreloadDrop).start();
+        new Thread(sliderThreadForStackDrop).start();
+
+
+        while(elevatorThreadWorking||sliderThreadWorking) {
+
+
+            sleep(50);
+        }
+
+
+        elevator.dropBeforeRelease();
+
+
+        grabber.release();
+
+
+        sleep(300);
+
+
+        new Thread(sliderThreadForStackPickup).start();
+        new Thread(elevatorThreadForStackPickup).start();
+        new Thread(armThreadForStackPickup).start();
+
+        //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
+        //If so, we will NOT be parking..take a look at that
+        while(elevatorThreadWorking||sliderThreadWorking) {
+            sleep(50);
+        }
+
+        sleep(1000);
+        arm.goHome();
         elevator.goToStackPickup(numberOfConesLeftInStack);
 
         sleep(500);
@@ -137,7 +242,8 @@ public class RedRight extends LinearOpMode {
         elevatorThreadWorking = true;
         armThreadWorking = true;
 
-        new Thread(elevatorThreadForPreloadDrop).start();
+        sleep(300);
+        new Thread(elevatorThreadForStackDrop).start();
         sleep(300);
         new Thread(armThreadForPreloadDrop).start();
         new Thread(sliderThreadForStackDrop).start();
@@ -145,9 +251,60 @@ public class RedRight extends LinearOpMode {
 
         while(elevatorThreadWorking||sliderThreadWorking) {
 
-            //TODO robot gets stuck in this loop
+
             sleep(50);
         }
+
+
+        elevator.dropBeforeRelease();
+
+
+        grabber.release();
+
+
+        sleep(300);
+
+
+        new Thread(sliderThreadForStackPickup).start();
+        new Thread(elevatorThreadForStackPickup).start();
+        new Thread(armThreadForStackPickup).start();
+
+        //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
+        //If so, we will NOT be parking..take a look at that
+        while(elevatorThreadWorking||sliderThreadWorking) {
+            sleep(50);
+        }
+        sleep(1000);
+        arm.goHome();
+        elevator.goToStackPickup(numberOfConesLeftInStack);
+
+        sleep(300);
+
+        grabber.pickup();
+        numberOfConesLeftInStack--;
+
+        sliderThreadWorking = true;
+        elevatorThreadWorking = true;
+        armThreadWorking = true;
+
+        sleep(300);
+        new Thread(elevatorThreadForStackDrop).start();
+        sleep(300);
+        new Thread(armThreadForPreloadDrop).start();
+        new Thread(sliderThreadForStackDrop).start();
+
+
+        while(elevatorThreadWorking||sliderThreadWorking) {
+
+
+            sleep(50);
+        }
+
+
+        elevator.dropBeforeRelease();
+
+
+        grabber.release();
 
         //TODO repeat this again
 
