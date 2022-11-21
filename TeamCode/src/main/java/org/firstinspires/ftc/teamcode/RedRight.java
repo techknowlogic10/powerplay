@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -18,6 +19,9 @@ public class RedRight extends LinearOpMode {
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
     public static Pose2d MID_WAY = new Pose2d(34.5,-40,Math.toRadians(15));
     public static Pose2d CONE_DROP_POSITION = new Pose2d(34.5,-12,Math.toRadians(15));
+    public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -31, Math.toRadians(0));
+    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = -22;
+    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = 22;
 
     public static int JUNCTION_LEVEL = 2;
     public static double ARM_POSITION = .673564;
@@ -43,6 +47,8 @@ public class RedRight extends LinearOpMode {
         Slider slider = new Slider(hardwareMap);
 
         TrajectorySequence positionToMedJunctionTrajectory = drivetrain.trajectorySequenceBuilder(STARTING_POSITION).lineToLinearHeading(MID_WAY).lineToLinearHeading(CONE_DROP_POSITION).build();
+
+        Trajectory parkingStep1Trajectory = drivetrain.trajectoryBuilder(CONE_DROP_POSITION).lineToLinearHeading(PARKING_STEP1_POSITION).build();
 
         Runnable elevatorThreadForPreloadDrop = new Runnable() {
             @Override
@@ -129,8 +135,6 @@ public class RedRight extends LinearOpMode {
         sleep(300);
 
 
-
-
         //additional cones drop
         new Thread(sliderThreadForStackPickup).start();
         new Thread(elevatorThreadForStackPickup).start();
@@ -160,7 +164,6 @@ public class RedRight extends LinearOpMode {
         new Thread(armThreadForPreloadDrop).start();
         new Thread(sliderThreadForStackDrop).start();
 
-
         while(elevatorThreadWorking||sliderThreadWorking) {
             sleep(50);
         }
@@ -170,11 +173,7 @@ public class RedRight extends LinearOpMode {
         grabber.release();
         sleep(300);
 
-
-
-
-
-               //additional cones drop
+        //additional cones drop
         new Thread(sliderThreadForStackPickup).start();
         new Thread(elevatorThreadForStackPickup).start();
         new Thread(armThreadForStackPickup).start();
@@ -303,11 +302,23 @@ public class RedRight extends LinearOpMode {
 
         elevator.dropBeforeRelease();
 
-
         grabber.release();
 
         //TODO repeat this again
 
         //TODO park the robot
+
+        new Thread(armThreadForStackPickup).start();
+
+        drivetrain.followTrajectory(parkingStep1Trajectory);
+
+        if(parkingPosition == 1) {
+            Trajectory parkingStep2Trajectory = drivetrain.trajectoryBuilder(PARKING_STEP1_POSITION).forward(PARKING_STEP2_FORWARD_PARKING_POSITION_1).build();
+            drivetrain.followTrajectory(parkingStep2Trajectory);
+        } else if(parkingPosition == 3) {
+            Trajectory parkingStep2Trajectory = drivetrain.trajectoryBuilder(PARKING_STEP1_POSITION).forward(PARKING_STEP2_FORWARD_PARKING_POSITION_3).build();
+            drivetrain.followTrajectory(parkingStep2Trajectory);
+        }
+
     }
 }
