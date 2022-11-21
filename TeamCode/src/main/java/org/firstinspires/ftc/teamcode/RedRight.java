@@ -132,16 +132,13 @@ public class RedRight extends LinearOpMode {
         //release the preloaded cone
         grabber.release();
 
+        // FIRST Additional Cone START
         sleep(300);
 
-
-        //additional cones drop
         new Thread(sliderThreadForStackPickup).start();
         new Thread(elevatorThreadForStackPickup).start();
         new Thread(armThreadForStackPickup).start();
 
-        //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
-        //If so, we will NOT be parking..take a look at that
         while(elevatorThreadWorking||sliderThreadWorking) {
             sleep(50);
         }
@@ -159,6 +156,7 @@ public class RedRight extends LinearOpMode {
         armThreadWorking = true;
 
         sleep(600);
+
         new Thread(elevatorThreadForStackDrop).start();
         sleep(300);
         new Thread(armThreadForPreloadDrop).start();
@@ -168,9 +166,12 @@ public class RedRight extends LinearOpMode {
             sleep(50);
         }
 
-
         elevator.dropBeforeRelease();
         grabber.release();
+        // 1st Additional Cone END
+
+
+        //2nd Additional Cone START
         sleep(300);
 
         //additional cones drop
@@ -178,8 +179,6 @@ public class RedRight extends LinearOpMode {
         new Thread(elevatorThreadForStackPickup).start();
         new Thread(armThreadForStackPickup).start();
 
-        //TODO is it possible for any of these threads to be continuously working (something got messed up?)?
-        //If so, we will NOT be parking..take a look at that
         while(elevatorThreadWorking||sliderThreadWorking) {
             sleep(50);
         }
@@ -201,19 +200,12 @@ public class RedRight extends LinearOpMode {
         new Thread(armThreadForPreloadDrop).start();
         new Thread(sliderThreadForStackDrop).start();
 
-
         while(elevatorThreadWorking||sliderThreadWorking) {
-
-
             sleep(50);
         }
 
-
         elevator.dropBeforeRelease();
-
-
         grabber.release();
-
 
         sleep(300);
 

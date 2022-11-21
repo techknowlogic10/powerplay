@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.transition.Slide;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -19,7 +21,7 @@ public class RedRightHighJunction extends LinearOpMode {
     public static double ARM_POSITION = 0.985;
 
     public static int STEP1_STRAFE_LEFT = 24;
-    public static int STEP2_FORWARD = 42;
+    public static int STEP2_FORWARD = 40;
     public static int STEP3_STRAFE_LEFT = 4;
     public static int STEP3A_STRAFE_RIGHT = 6;
     public static int STEP4_BACK = 15;
@@ -50,6 +52,7 @@ public class RedRightHighJunction extends LinearOpMode {
         Trajectory step3a_strafeRight = drivetrain.trajectoryBuilder(step3_strafeLeft.end()).strafeRight(STEP3A_STRAFE_RIGHT).build();
         Trajectory step4_back = drivetrain.trajectoryBuilder(step3a_strafeRight.end()).back(STEP4_BACK).build();
 
+        Slider slider = new Slider(hardwareMap);
 
 
         while (opModeInInit()) {
@@ -58,6 +61,7 @@ public class RedRightHighJunction extends LinearOpMode {
         }
 
         waitForStart();
+
         elevator.goToLevel(0);
         //scan here to get parking position
         int parkingPosition = detector.getSignalPosition();
@@ -79,7 +83,7 @@ public class RedRightHighJunction extends LinearOpMode {
 
         //step5 - move arm to a dropping position
         arm.move(ARM_POSITION);
-
+        sleep(1000);
         elevator.holdElevator(ELEVATOR_HOLD_ITERATIONS);
 
         //sto6 - grabber releases the cone
