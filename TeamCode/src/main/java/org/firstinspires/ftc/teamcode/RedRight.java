@@ -22,9 +22,12 @@ public class RedRight extends LinearOpMode {
     public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -31, Math.toRadians(0));
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = -22;
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = 22;
+    public static int WAIT_AFTER_DROP = 100;
+    public static int WAIT_BEFORE_PICKUP = 300;
+    public static int WAIT_AFTER_PICKUP = 400;
 
     public static int JUNCTION_LEVEL = 2;
-    public static double ARM_POSITION = .673564;
+    public static double ARM_POSITION = .68;
 
     private int numberOfConesLeftInStack = 5;
 
@@ -128,12 +131,16 @@ public class RedRight extends LinearOpMode {
         new Thread(armThreadForPreloadDrop).start();
         drivetrain.followTrajectorySequence(positionToMedJunctionTrajectory);
 
+
+
         elevator.dropBeforeRelease();
         //release the preloaded cone
         grabber.release();
 
+        elevator.liftBeforeRelease();
+
         // FIRST Additional Cone START
-        sleep(300);
+        sleep(WAIT_AFTER_DROP);
 
         new Thread(sliderThreadForStackPickup).start();
         new Thread(elevatorThreadForStackPickup).start();
@@ -146,7 +153,7 @@ public class RedRight extends LinearOpMode {
         arm.goHome();
         elevator.goToStackPickup(numberOfConesLeftInStack);
 
-        sleep(300);
+        sleep(WAIT_BEFORE_PICKUP);
 
         grabber.pickup();
         numberOfConesLeftInStack--;
@@ -155,7 +162,7 @@ public class RedRight extends LinearOpMode {
         elevatorThreadWorking = true;
         armThreadWorking = true;
 
-        sleep(600);
+        sleep(WAIT_AFTER_PICKUP);
 
         new Thread(elevatorThreadForStackDrop).start();
         sleep(300);
@@ -166,13 +173,15 @@ public class RedRight extends LinearOpMode {
             sleep(50);
         }
 
+
         elevator.dropBeforeRelease();
         grabber.release();
+        elevator.liftBeforeRelease();
         // 1st Additional Cone END
 
 
         //2nd Additional Cone START
-        sleep(300);
+        sleep(WAIT_AFTER_DROP);
 
         //additional cones drop
         new Thread(sliderThreadForStackPickup).start();
@@ -185,7 +194,7 @@ public class RedRight extends LinearOpMode {
         sleep(1000);
         arm.goHome();
         elevator.goToStackPickup(numberOfConesLeftInStack);
-        sleep(300);
+        sleep(WAIT_BEFORE_PICKUP);
 
         grabber.pickup();
         numberOfConesLeftInStack--;
@@ -194,7 +203,7 @@ public class RedRight extends LinearOpMode {
         elevatorThreadWorking = true;
         armThreadWorking = true;
 
-        sleep(300);
+        sleep(WAIT_AFTER_PICKUP);
         new Thread(elevatorThreadForStackDrop).start();
         sleep(300);
         new Thread(armThreadForPreloadDrop).start();
@@ -204,10 +213,13 @@ public class RedRight extends LinearOpMode {
             sleep(50);
         }
 
+
+
         elevator.dropBeforeRelease();
         grabber.release();
+        elevator.liftBeforeRelease();
 
-        sleep(300);
+        sleep(WAIT_AFTER_DROP);
 
 
         new Thread(sliderThreadForStackPickup).start();
@@ -224,7 +236,7 @@ public class RedRight extends LinearOpMode {
         arm.goHome();
         elevator.goToStackPickup(numberOfConesLeftInStack);
 
-        sleep(500);
+        sleep(WAIT_BEFORE_PICKUP);
 
         grabber.pickup();
         numberOfConesLeftInStack--;
@@ -233,7 +245,7 @@ public class RedRight extends LinearOpMode {
         elevatorThreadWorking = true;
         armThreadWorking = true;
 
-        sleep(300);
+        sleep(WAIT_AFTER_PICKUP);
         new Thread(elevatorThreadForStackDrop).start();
         sleep(300);
         new Thread(armThreadForPreloadDrop).start();
@@ -248,12 +260,12 @@ public class RedRight extends LinearOpMode {
 
 
         elevator.dropBeforeRelease();
-
-
         grabber.release();
+        elevator.liftBeforeRelease();
 
 
-        sleep(300);
+
+        sleep(WAIT_AFTER_DROP);
 
 
         new Thread(sliderThreadForStackPickup).start();
@@ -269,7 +281,7 @@ public class RedRight extends LinearOpMode {
         arm.goHome();
         elevator.goToStackPickup(numberOfConesLeftInStack);
 
-        sleep(300);
+        sleep(WAIT_BEFORE_PICKUP);
 
         grabber.pickup();
         numberOfConesLeftInStack--;
@@ -278,7 +290,7 @@ public class RedRight extends LinearOpMode {
         elevatorThreadWorking = true;
         armThreadWorking = true;
 
-        sleep(300);
+        sleep(WAIT_AFTER_PICKUP);
         new Thread(elevatorThreadForStackDrop).start();
         sleep(300);
         new Thread(armThreadForPreloadDrop).start();
@@ -293,8 +305,9 @@ public class RedRight extends LinearOpMode {
 
 
         elevator.dropBeforeRelease();
-
         grabber.release();
+        elevator.liftBeforeRelease();
+
 
         //TODO repeat this again
 
