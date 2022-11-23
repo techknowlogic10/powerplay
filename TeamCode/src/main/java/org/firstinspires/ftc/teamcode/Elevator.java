@@ -5,13 +5,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 @Config
 public class Elevator {
 
-    public static int TICK_DROP_BEFORE_RELEASE = 200;
-    public static int TICK_LIFT_BEFORE_RELEASE = 100;
+    public static int TICKS_DROP_BEFORE_RELEASE = 200;
+    public static int TICKS_LIFT_AFTER_RELEASE = 100;
 
     public static int INITIAL_RISE_TICKS = 300;
 
@@ -62,6 +60,7 @@ public class Elevator {
             sleep(50);
         }
     }
+
     public void prepareForPickup() {
 
         int targetPosition = ElevatorPositions.getPrepareForPickup();
@@ -70,12 +69,10 @@ public class Elevator {
         elevator.setPower(1.0);
 
 
-
         while (elevator.isBusy()) {
             sleep(50);
         }
     }
-
 
 
     private void goToPosition(int desiredPosition) {
@@ -97,7 +94,7 @@ public class Elevator {
     }
 
     public void holdElevatorForTicks(int desiredTicks) {
-        if(elevator.getCurrentPosition() < desiredTicks) {
+        if (elevator.getCurrentPosition() < desiredTicks) {
             elevator.setPower(0.05);
             sleep(50);
         }
@@ -123,7 +120,7 @@ public class Elevator {
 
     public void dropBeforeRelease() {
         int currentTicks = elevator.getCurrentPosition();
-        elevator.setTargetPosition(currentTicks - TICK_DROP_BEFORE_RELEASE);
+        elevator.setTargetPosition(currentTicks - TICKS_DROP_BEFORE_RELEASE);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setPower(1.0);
         while (elevator.isBusy()) {
@@ -131,14 +128,13 @@ public class Elevator {
         }
     }
 
-    public void liftBeforeRelease() {
+    public void liftAfterRelease() {
         int currentTicks = elevator.getCurrentPosition();
-        elevator.setTargetPosition(currentTicks + TICK_LIFT_BEFORE_RELEASE);
+        elevator.setTargetPosition(currentTicks + TICKS_LIFT_AFTER_RELEASE);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setPower(1.0);
         while (elevator.isBusy()) {
             sleep(25);
         }
-
     }
 }
