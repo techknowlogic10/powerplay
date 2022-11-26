@@ -122,7 +122,7 @@ public class Elevator {
         int currentTicks = elevator.getCurrentPosition();
         elevator.setTargetPosition(currentTicks - TICKS_DROP_BEFORE_RELEASE);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        elevator.setPower(1.0);
+        elevator.setPower(0.5);
         while (elevator.isBusy()) {
             sleep(25);
         }
@@ -132,7 +132,7 @@ public class Elevator {
         int currentTicks = elevator.getCurrentPosition();
         elevator.setTargetPosition(currentTicks + TICKS_LIFT_AFTER_RELEASE);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        elevator.setPower(1.0);
+        elevator.setPower(0.5);
         while (elevator.isBusy()) {
             sleep(25);
         }

@@ -27,6 +27,7 @@ public class DriverOperatorMain extends OpMode {
     Servo Arm = null;
     Servo Grabber = null;
     Servo DRS = null;
+    Servo Brake = null;
 
 
 
@@ -77,6 +78,9 @@ public class DriverOperatorMain extends OpMode {
         ConeSensor = hardwareMap.get(DigitalChannel.class, "cone sensor");
         SliderDistance = hardwareMap.get(DistanceSensor.class, "Slider Distance");
         ConeToArm = hardwareMap.get(DistanceSensor.class, "cone to arm sensor");
+
+        Brake = hardwareMap.get(Servo.class, "brake");
+        Brake.setPosition(0);
         // set the digital channel to input.
         ConeSensor.setMode(DigitalChannel.Mode.INPUT);
 
@@ -101,7 +105,26 @@ public class DriverOperatorMain extends OpMode {
             Drivepower = 1.5;
         }
 
+        if (gamepad2.start){
+            double position = Brake.getPosition();
+
+            position = position + 0.01;
+
+            Brake.setPosition(position);
+
+
+        } else if (gamepad2.share){
+
+            double position = Brake.getPosition();
+
+            position = position - 0.01;
+
+            Brake.setPosition(position);
+
+        }
+
         telemetry.addLine("Slider is" + SliderDistance.getDistance(DistanceUnit.CM));
+        telemetry.addLine("brake is" + Brake.getPosition());
         double y = gamepad1.left_stick_y; // Remember, this is reversed!
         double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
         double rx = -gamepad1.right_stick_x;

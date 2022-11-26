@@ -36,7 +36,7 @@ public class RedRight extends LinearOpMode {
         Elevator elevator = new Elevator(hardwareMap);
         Arm arm = new Arm(hardwareMap);
         Grabber grabber = new Grabber(hardwareMap);
-        Slider slider = new Slider(hardwareMap);
+        Brake brake = new Brake(hardwareMap);
 
         AdditionalConeDropper additionalConeDropper = new AdditionalConeDropper(hardwareMap);
 
@@ -98,9 +98,12 @@ public class RedRight extends LinearOpMode {
         grabber.release();
         elevator.liftAfterRelease();
 
+        brake.brake();
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
-
+        additionalConeDropper.pickAndDropAdditionalCone();
+        additionalConeDropper.pickAndDropAdditionalCone();
+        brake.goHome();
         //Reset the arm position so that it will not cross the parking barrier
         armThreadToGoHome.start();
 
