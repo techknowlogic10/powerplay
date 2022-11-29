@@ -17,7 +17,9 @@ public class RedLeft extends LinearOpMode {
     public static Pose2d STARTING_POSITION = new Pose2d(-40.3, -60, Math.toRadians(90));
     public static Pose2d MID_WAY = new Pose2d(-34.5, -40, Math.toRadians(165));
     public static Pose2d CONE_DROP_POSITION = new Pose2d(-34, -12, Math.toRadians(165));
+
     public static Pose2d PARKING_STEP1_POSITION = new Pose2d(-34.5, -31, Math.toRadians(180));
+
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = 22;
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = -22;
 
@@ -91,12 +93,9 @@ public class RedLeft extends LinearOpMode {
 
         drivetrain.followTrajectorySequence(positionToMedJunctionTrajectory);
 
-
         elevator.dropBeforeRelease();
-
         grabber.release();
         elevator.liftAfterRelease();
-
         brake.brake();
 
         additionalConeDropper.pickAndDropAdditionalCone();
@@ -104,7 +103,6 @@ public class RedLeft extends LinearOpMode {
 
         brake.goHome();
         armThreadToGoHome.start();
-
 
         drivetrain.followTrajectory(parkingStep1Trajectory);
 
@@ -114,7 +112,6 @@ public class RedLeft extends LinearOpMode {
         } else if (parkingPosition == 3) {
             Trajectory parkingStep2Trajectory = drivetrain.trajectoryBuilder(PARKING_STEP1_POSITION).forward(PARKING_STEP2_FORWARD_PARKING_POSITION_3).build();
             drivetrain.followTrajectory(parkingStep2Trajectory);
-
         }
     }
 }
