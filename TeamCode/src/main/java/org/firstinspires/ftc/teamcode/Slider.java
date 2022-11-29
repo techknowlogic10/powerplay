@@ -11,10 +11,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class Slider {
 
     //TODO find the ticks
-    public static int HOME_TICKS = 750;
-    public static int FULL_EXTENSION_TICKS = 100;
     public static int HOME_DISTANCE_CM = 10;
-    public static double EXTENDED_DISTANCE_CM = 54;
+    public static double EXTENDED_DISTANCE_CM = 55;
     public static double SLIDER_SPEED = 0.8;
 
     private HardwareMap hardwareMap;
