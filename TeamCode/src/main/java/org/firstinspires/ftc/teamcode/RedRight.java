@@ -102,15 +102,13 @@ public class RedRight extends LinearOpMode {
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
-<<<<<<< HEAD
+
         additionalConeDropper.pickAndDropAdditionalCone();
 
         if (parkingPosition == 2|| parkingPosition == -1){
             additionalConeDropper.pickAndDropAdditionalCone();
         }
-=======
-        //additionalConeDropper.pickAndDropAdditionalCone();
->>>>>>> ea98b50d6b2027ea60856808e208b9fe54c76072
+
         brake.goHome();
 
         //Reset the arm position so that it will not cross the parking barrier
