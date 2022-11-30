@@ -7,20 +7,16 @@ public class ElevatorPositions {
     public static int MID_JUNCTION_TICKS = 1166;
 
 
-
-    public static double MULTIPLIER = 1.5;
-
-
-    public static int HIGH_JUNCTION_TICKS = 1733;
+    public static int HIGH_JUNCTION_TICKS = 1675;
     public static int LOW_JUNCTION_TICKS = 500;
     public static int PREPARE_FOR_PICKUP_TICKS = 533;
 
 
     public static int STACK_LEVEL5_TICKS = 233;
     public static int STACK_LEVEL4_TICKS = 200;
-    public static int STACK_LEVEL3_TICKS = 166;
+    public static int STACK_LEVEL3_TICKS = 126;
     public static int STACK_LEVEL2_TICKS = 86;
-    public static int STACK_LEVEL1_TICKS = 20;
+    public static int STACK_LEVEL1_TICKS = 0;
 
     public static int getLowJunctionTicks(){
 

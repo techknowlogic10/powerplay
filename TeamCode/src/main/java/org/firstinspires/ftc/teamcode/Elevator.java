@@ -54,7 +54,7 @@ public class Elevator {
         int targetPosition = ElevatorPositions.getStackLevelTicks(numberOfConesLeftInStack);
         elevator.setTargetPosition(targetPosition);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        elevator.setPower(0.2);
+        elevator.setPower(0.4);
 
         while (elevator.isBusy()) {
             sleep(50);

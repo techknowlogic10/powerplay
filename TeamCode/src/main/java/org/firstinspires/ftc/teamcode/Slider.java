@@ -14,8 +14,8 @@ public class Slider {
     public static int HOME_TICKS = 750;
     public static int FULL_EXTENSION_TICKS = 100;
     public static int HOME_DISTANCE_CM = 10;
-    public static double EXTENDED_DISTANCE_CM = 54;
-    public static double SLIDER_SPEED = 0.8;
+    public static double EXTENDED_DISTANCE_CM = 53.5;
+    public static double SLIDER_SPEED = 1;
 
     private HardwareMap hardwareMap;
     DcMotor slider = null;

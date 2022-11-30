@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Arm {
 
-    public static double ARM_HOME = 0.0125;
+    public static double ARM_HOME = 0.005;
     public static int WAIT_MILLS_TO_GO_HOME = 1000;
     public static int WAIT_MILLS_TO_GO_TO_POSITION = 1000;
 

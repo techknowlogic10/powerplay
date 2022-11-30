@@ -15,6 +15,8 @@ public class AdditionalConeDropper {
     private Arm arm;
     private Grabber grabber;
 
+    private int junctionLevel;
+
     Runnable sliderRunnableForStackPickup = new Runnable() {
         @Override
         public void run() {
@@ -50,7 +52,7 @@ public class AdditionalConeDropper {
     Runnable elevatorRunnableForStackDrop = new Runnable() {
         @Override
         public void run() {
-            elevator.goToLevel(RedRight.JUNCTION_LEVEL);
+            elevator.goToLevel(junctionLevel);
         }
     };
     Thread elevatorThreadForStackDrop = new Thread(elevatorRunnableForStackDrop);
@@ -65,13 +67,17 @@ public class AdditionalConeDropper {
 
     private int numberOfConesLeftInStack = 5;
 
-    public AdditionalConeDropper(HardwareMap hardwareMap) {
+    public AdditionalConeDropper(HardwareMap hardwareMap, int junctionLevel) {
         this.hardwareMap = hardwareMap;
 
         slider = new Slider(hardwareMap);
         elevator = new Elevator(hardwareMap);
         arm = new Arm(hardwareMap);
         grabber = new Grabber(hardwareMap);
+
+        this.junctionLevel = junctionLevel;
+
+
     }
 
     public void pickAndDropAdditionalCone() {
@@ -88,7 +94,7 @@ public class AdditionalConeDropper {
 
         elevator.goToStackPickup(numberOfConesLeftInStack);
 
-        sleep(WAIT_BEFORE_PICKUP);
+        //sleep(WAIT_BEFORE_PICKUP);
 
         grabber.pickup();
         numberOfConesLeftInStack--;

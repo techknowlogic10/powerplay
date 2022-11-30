@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -10,16 +11,16 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-@Autonomous (name = "Red Right States")
+@Autonomous (name = "Red Left States")
 @Config
-public class RedRight extends LinearOpMode {
+public class RedLeft extends LinearOpMode {
 
-    public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
-    public static Pose2d MID_WAY = new Pose2d(34.5,-40,Math.toRadians(15));
-    public static Pose2d CONE_DROP_POSITION = new Pose2d(34.5,-12,Math.toRadians(15));
-    public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -31, Math.toRadians(0));
-    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = -22;
-    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = 22;
+    public static Pose2d STARTING_POSITION = new Pose2d(-40.3, -60, Math.toRadians(90));
+    public static Pose2d MID_WAY = new Pose2d(-34.5, -40, Math.toRadians(165));
+    public static Pose2d CONE_DROP_POSITION = new Pose2d(-34, -12, Math.toRadians(165));
+    public static Pose2d PARKING_STEP1_POSITION = new Pose2d(-34.5, -31, Math.toRadians(180));
+    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = 22;
+    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = -22;
 
     public static int JUNCTION_LEVEL = 2;
     public static double ARM_POSITION = .68;
@@ -41,8 +42,8 @@ public class RedRight extends LinearOpMode {
         AdditionalConeDropper additionalConeDropper = new AdditionalConeDropper(hardwareMap, 2);
 
         TrajectorySequence positionToMedJunctionTrajectory = drivetrain.trajectorySequenceBuilder(STARTING_POSITION).lineToLinearHeading(MID_WAY).lineToLinearHeading(CONE_DROP_POSITION).build();
-        Trajectory parkingStep1Trajectory = drivetrain.trajectoryBuilder(CONE_DROP_POSITION).lineToLinearHeading(PARKING_STEP1_POSITION).build();
 
+        Trajectory parkingStep1Trajectory = drivetrain.trajectoryBuilder(CONE_DROP_POSITION).lineToLinearHeading(PARKING_STEP1_POSITION).build();
 
         Runnable elevatorRunnableForPreloadDrop = new Runnable() {
             @Override
@@ -55,7 +56,7 @@ public class RedRight extends LinearOpMode {
         Runnable armRunnableForPreloadDrop = new Runnable() {
             @Override
             public void run() {
-                arm.move(RedRight.ARM_POSITION);
+                arm.move(RedLeft.ARM_POSITION);
             }
         };
         Thread armThreadForPreloadDrop = new Thread(armRunnableForPreloadDrop);
@@ -84,7 +85,6 @@ public class RedRight extends LinearOpMode {
 
         waitForStart();
 
-        //scan here to get parking position
         int parkingPosition = detector.getSignalPosition();
 
         elevatorThreadForPreloadDrop.start();
@@ -92,29 +92,27 @@ public class RedRight extends LinearOpMode {
 
         drivetrain.followTrajectorySequence(positionToMedJunctionTrajectory);
 
+
         elevator.dropBeforeRelease();
 
-        //release the preloaded cone
         grabber.release();
         elevator.liftAfterRelease();
 
         brake.brake();
-        additionalConeDropper.pickAndDropAdditionalCone();
-        additionalConeDropper.pickAndDropAdditionalCone();
-        additionalConeDropper.pickAndDropAdditionalCone();
-        additionalConeDropper.pickAndDropAdditionalCone();
 
-        if (parkingPosition == 2|| parkingPosition == -1){
+        additionalConeDropper.pickAndDropAdditionalCone();
+        additionalConeDropper.pickAndDropAdditionalCone();
+        additionalConeDropper.pickAndDropAdditionalCone();
+        additionalConeDropper.pickAndDropAdditionalCone();
+        if (parkingPosition == 2|| parkingPosition == -1) {
             additionalConeDropper.pickAndDropAdditionalCone();
         }
+
         brake.goHome();
-        //Reset the arm position so that it will not cross the parking barrier
         armThreadToGoHome.start();
 
-        //Park the robot
 
         drivetrain.followTrajectory(parkingStep1Trajectory);
-
 
         if (parkingPosition == 1) {
             Trajectory parkingStep2Trajectory = drivetrain.trajectoryBuilder(PARKING_STEP1_POSITION).forward(PARKING_STEP2_FORWARD_PARKING_POSITION_1).build();
@@ -126,6 +124,4 @@ public class RedRight extends LinearOpMode {
 
         }
     }
-
-
 }
