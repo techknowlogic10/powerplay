@@ -101,10 +101,6 @@ public class RedLeft extends LinearOpMode {
         elevator.liftAfterRelease();
 
 
-        elevator.dropBeforeRelease();
-        grabber.release();
-        elevator.liftAfterRelease();
-
         brake.brake();
 
         additionalConeDropper.pickAndDropAdditionalCone();

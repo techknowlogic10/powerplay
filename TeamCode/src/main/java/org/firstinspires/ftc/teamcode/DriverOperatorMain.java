@@ -96,7 +96,7 @@ public class DriverOperatorMain extends OpMode {
 
         ELEVATOR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Sliderdistance = SliderDistance.getDistance(DistanceUnit.CM);
-        Elevator elevator = new Elevator(hardwareMap);
+
         Drivepower = 4;
         if (gamepad1.right_trigger > 0.5){
             Drivepower = 2.5;
