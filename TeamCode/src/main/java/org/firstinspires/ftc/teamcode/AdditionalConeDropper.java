@@ -6,7 +6,7 @@ public class AdditionalConeDropper {
 
     public static int WAIT_AFTER_DROP = 100;
     public static int WAIT_BEFORE_PICKUP = 300;
-    public static int WAIT_AFTER_PICKUP = 400;
+    public static int WAIT_AFTER_PICKUP = 250;
 
     private HardwareMap hardwareMap;
 
@@ -36,6 +36,8 @@ public class AdditionalConeDropper {
     Runnable armRunnableForStackPickup = new Runnable() {
         @Override
         public void run() {
+
+
             arm.goHome();
         }
     };
@@ -94,7 +96,7 @@ public class AdditionalConeDropper {
 
         elevator.goToStackPickup(numberOfConesLeftInStack);
 
-        //sleep(WAIT_BEFORE_PICKUP);
+
 
         grabber.pickup();
         numberOfConesLeftInStack--;

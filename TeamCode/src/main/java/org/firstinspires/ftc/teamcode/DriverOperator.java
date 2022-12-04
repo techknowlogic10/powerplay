@@ -45,6 +45,8 @@ public class DriverOperator extends OpMode {
     double SliderLimitRear = 100;
     double ElevatorPower = 0;
     double DRS_pos = 0;
+    Brake brake;
+
 
     @Override
     public void init() {
@@ -80,6 +82,8 @@ public class DriverOperator extends OpMode {
         // set the digital channel to input.
         ConeSensor.setMode(DigitalChannel.Mode.INPUT);
 
+        brake = new Brake(hardwareMap);
+
         DRS = hardwareMap.get(Servo.class, "DRS");
 
 
@@ -99,6 +103,12 @@ public class DriverOperator extends OpMode {
         }
         if (gamepad1.left_stick_button){
             Drivepower = 1.5;
+        }
+
+        if (gamepad1.a){
+            brake.brake();
+        } else if(gamepad1.b){
+            brake.goHome();
         }
 
         telemetry.addLine("Slider is" + SliderDistance.getDistance(DistanceUnit.CM));
@@ -134,7 +144,7 @@ public class DriverOperator extends OpMode {
 
         ELEVATOR.setPower(-ElevatorPower);
         if (gamepad2.dpad_down){
-            ArmPos = 0;
+            ArmPos = 0.027;
             Arm.setPosition(ArmPos);
         }
         if (gamepad2.dpad_up){

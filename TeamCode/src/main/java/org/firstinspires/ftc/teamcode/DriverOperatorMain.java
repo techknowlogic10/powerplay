@@ -80,7 +80,7 @@ public class DriverOperatorMain extends OpMode {
         ConeToArm = hardwareMap.get(DistanceSensor.class, "cone to arm sensor");
 
         Brake = hardwareMap.get(Servo.class, "brake");
-        Brake.setPosition(0);
+
         // set the digital channel to input.
         ConeSensor.setMode(DigitalChannel.Mode.INPUT);
 
@@ -161,7 +161,7 @@ public class DriverOperatorMain extends OpMode {
             Arm.setPosition(ArmPos);
         }
         if (gamepad2.dpad_up){
-            ArmPos = .673564;
+            ArmPos = .72;
             Arm.setPosition(ArmPos);
         }
         if (gamepad2.dpad_left){
@@ -189,7 +189,7 @@ public class DriverOperatorMain extends OpMode {
             }else
                 Slider.setPower(.8);
         } else if (gamepad1.left_bumper) {
-            Slider.setPower(SliderSpeedRear);
+            Slider.setPower(-.8);
         } else{
            Slider.setPower(0);
         }
