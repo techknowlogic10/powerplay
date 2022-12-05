@@ -16,11 +16,11 @@ public class RedLeft extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(-40.3, -60, Math.toRadians(90));
     public static Pose2d MID_WAY = new Pose2d(-34.5, -40, Math.toRadians(165));
-    public static Pose2d CONE_DROP_POSITION = new Pose2d(-34, -12, Math.toRadians(165));
+    public static Pose2d CONE_DROP_POSITION = new Pose2d(-33, -11.7, Math.toRadians(165));
     public static Pose2d PARKING_STEP1_POSITION = new Pose2d(-34.5, -31, Math.toRadians(180));
 
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = 22;
-    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = -22;
+    public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = -20;
 
     public static int JUNCTION_LEVEL = 2;
     public static double ARM_POSITION = .68;
@@ -70,6 +70,19 @@ public class RedLeft extends LinearOpMode {
         };
         Thread armThreadToGoHome = new Thread(armRunnableToGoHome);
 
+
+        Runnable brakeRunnableAfterEnd = new Runnable() {
+            @Override
+            public void run() {
+                while (opModeIsActive()){
+                    sleep(25);
+                }
+                brake.brake();
+            }
+        };
+
+        Thread brakeAfterEnd = new Thread(brakeRunnableAfterEnd);
+
         grabber.pickup();
 
         sleep(2000);
@@ -107,15 +120,13 @@ public class RedLeft extends LinearOpMode {
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
-        if (parkingPosition == 2 || parkingPosition == -1) {
-            additionalConeDropper.pickAndDropAdditionalCone();
-        }
         brake.goHome();
         armThreadToGoHome.start();
 
 
         drivetrain.followTrajectory(parkingStep1Trajectory);
 
+        brakeAfterEnd.start();
         if (parkingPosition == 1) {
             Trajectory parkingStep2Trajectory = drivetrain.trajectoryBuilder(PARKING_STEP1_POSITION).forward(PARKING_STEP2_FORWARD_PARKING_POSITION_1).build();
             drivetrain.followTrajectory(parkingStep2Trajectory);

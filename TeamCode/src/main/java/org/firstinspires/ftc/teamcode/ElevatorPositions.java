@@ -12,11 +12,11 @@ public class ElevatorPositions {
     public static int PREPARE_FOR_PICKUP_TICKS = 533;
 
 
-    public static int STACK_LEVEL5_TICKS = 233;
+    public static int STACK_LEVEL5_TICKS = 290;
     public static int STACK_LEVEL4_TICKS = 200;
-    public static int STACK_LEVEL3_TICKS = 126;
-    public static int STACK_LEVEL2_TICKS = 30;
-    public static int STACK_LEVEL1_TICKS = -20;
+    public static int STACK_LEVEL3_TICKS = 160;
+    public static int STACK_LEVEL2_TICKS = 105;
+    public static int STACK_LEVEL1_TICKS = 50;
 
     public static int getLowJunctionTicks(){
 

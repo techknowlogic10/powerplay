@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Brake {
 
     public static double BRAKE_HOME = 1;
-    public static double BRAKE_POS = 0.83;
+    public static double BRAKE_POS = 0.8;
 
 
     Servo brake = null;

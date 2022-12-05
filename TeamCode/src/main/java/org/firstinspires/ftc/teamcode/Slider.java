@@ -13,7 +13,7 @@ public class Slider {
     //TODO find the ticks
     public static int HOME_DISTANCE_CM = 10;
 
-    public static double EXTENDED_DISTANCE_CM = 54;
+    public static double EXTENDED_DISTANCE_CM = 54.5;
     public static double SLIDER_SPEED = 1;
 
 
