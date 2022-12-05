@@ -87,6 +87,8 @@ public class DriverOperator extends OpMode {
         DRS = hardwareMap.get(Servo.class, "DRS");
 
 
+
+
     }
 
     @Override
@@ -100,6 +102,7 @@ public class DriverOperator extends OpMode {
         Drivepower = 4;
         if (gamepad1.right_trigger > 0.5){
             Drivepower = 2.5;
+            brake.goHome();
         }
         if (gamepad1.left_stick_button){
             Drivepower = 1.5;
@@ -208,17 +211,7 @@ telemetry.addLine("slider speed front is "+ SliderSpeedFront);
             SliderSpeedRear = -1;
         }
 
-        if (gamepad1.a){
-            SliderSpeedFront = SliderSpeedFront/2;
-            SliderSpeedRear = SliderSpeedRear/2;
-        }
 
-        if (gamepad1.y){
-            SliderLimitRear = SliderDistance.getDistance(DistanceUnit.CM);
-        }
-        if (gamepad1.x){
-            SliderLimitRear = 0;
-        }
         if (Sliderdistance >= SliderLimitRear){
             if (SliderSpeed == 1){
                 SliderSpeed = 0;

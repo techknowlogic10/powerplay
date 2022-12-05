@@ -10,18 +10,18 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-@Autonomous (name = "Red Right States")
+@Autonomous (name = "Red Right High States")
 @Config
-public class RedRight extends LinearOpMode {
+public class RedRightHigh extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
-    public static Pose2d MID_WAY = new Pose2d(34.5,-40,Math.toRadians(15));
-    public static Pose2d CONE_DROP_POSITION = new Pose2d(33,-11,Math.toRadians(15));
-    public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -31, Math.toRadians(0));
+    public static Pose2d MID_WAY = new Pose2d(38,-35,Math.toRadians(0));
+    public static Pose2d CONE_DROP_POSITION = new Pose2d(39.5,9,Math.toRadians(-15));
+    public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -3, Math.toRadians(0));
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = -22;
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = 22;
 
-    public static int JUNCTION_LEVEL = 2;
+    public static int JUNCTION_LEVEL = 3;
     public static double ARM_POSITION = .7;
 
     @Override
@@ -38,7 +38,7 @@ public class RedRight extends LinearOpMode {
         Grabber grabber = new Grabber(hardwareMap);
         Brake brake = new Brake(hardwareMap);
 
-        AdditionalConeDropper additionalConeDropper = new AdditionalConeDropper(hardwareMap, 2);
+        AdditionalConeDropper additionalConeDropper = new AdditionalConeDropper(hardwareMap, 3);
 
         TrajectorySequence positionToMedJunctionTrajectory = drivetrain.trajectorySequenceBuilder(STARTING_POSITION).lineToLinearHeading(MID_WAY).lineToLinearHeading(CONE_DROP_POSITION).build();
         Trajectory parkingStep1Trajectory = drivetrain.trajectoryBuilder(CONE_DROP_POSITION).lineToLinearHeading(PARKING_STEP1_POSITION).build();
@@ -55,7 +55,7 @@ public class RedRight extends LinearOpMode {
         Runnable armRunnableForPreloadDrop = new Runnable() {
             @Override
             public void run() {
-                arm.move(RedRight.ARM_POSITION);
+                arm.move(RedRightHigh.ARM_POSITION);
             }
         };
         Thread armThreadForPreloadDrop = new Thread(armRunnableForPreloadDrop);
@@ -96,13 +96,13 @@ public class RedRight extends LinearOpMode {
 
         //release the preloaded cone
         grabber.release();
-        elevator.liftAfterRelease();
-
+       // elevator.liftAfterRelease();
+sleep(500);
         brake.brake();
         additionalConeDropper.pickAndDropAdditionalCone();
-        additionalConeDropper.pickAndDropAdditionalCone();
-        additionalConeDropper.pickAndDropAdditionalCone();
-        additionalConeDropper.pickAndDropAdditionalCone();
+      //  additionalConeDropper.pickAndDropAdditionalCone();
+      //  additionalConeDropper.pickAndDropAdditionalCone();
+      //  additionalConeDropper.pickAndDropAdditionalCone();
 
 
 

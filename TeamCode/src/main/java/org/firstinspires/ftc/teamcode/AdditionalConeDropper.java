@@ -87,6 +87,9 @@ public class AdditionalConeDropper {
         sleep(WAIT_AFTER_DROP);
 
         sliderThreadForStackPickup.start();
+
+        sleep(200);
+
         elevatorThreadForStackPickup.start();
         armThreadForStackPickup.start();
 
@@ -95,8 +98,6 @@ public class AdditionalConeDropper {
         }
 
         elevator.goToStackPickup(numberOfConesLeftInStack);
-
-
 
         grabber.pickup();
         numberOfConesLeftInStack--;
