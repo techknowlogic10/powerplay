@@ -11,7 +11,7 @@ public class Elevator {
     public static int TICKS_DROP_BEFORE_RELEASE = 200;
     public static int TICKS_LIFT_AFTER_RELEASE = 100;
 
-    public static int INITIAL_RISE_TICKS = 300;
+    public static int INITIAL_RISE_TICKS = 350;
 
     public static int TICKS_DOWN_TO_GO_TO_TOP_OF_STACK = 1200;
     public static int TICKS_DOWN_FROM_TOP_OF_STACK_FOR_EACH_CONE = 100;

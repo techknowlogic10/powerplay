@@ -4,19 +4,21 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-@Autonomous (name = "Red Right States")
+@Autonomous (name = "Right States")
 @Config
+
 public class RedRight extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
-    public static Pose2d MID_WAY = new Pose2d(35,-40,Math.toRadians(15));
-    public static Pose2d CONE_DROP_POSITION = new Pose2d(33,-12.25,Math.toRadians(15));
+    public static Pose2d MID_WAY = new Pose2d(36,-40,Math.toRadians(15));
+    public static Pose2d CONE_DROP_POSITION = new Pose2d(34,-12.25,Math.toRadians(15));
     public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -31, Math.toRadians(0));
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = -22;
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = 22;
@@ -87,6 +89,10 @@ public class RedRight extends LinearOpMode {
         //raise the elevator so that it will not be on its way to drivetrain
         elevator.goToLevel(0);
 
+        sleep(1000);
+
+        arm.move(0.12);
+
         while (opModeInInit()) {
             telemetry.addLine("Parking position is " + detector.getSignalPosition());
             telemetry.update();
@@ -103,14 +109,17 @@ public class RedRight extends LinearOpMode {
         armThreadForPreloadDrop.start();
 
         drivetrain.followTrajectorySequence(positionToMedJunctionTrajectory);
+        brake.brake();
 
-        //elevator.dropBeforeRelease();
+        elevator.dropBeforeRelease();
 
         //release the preloaded cone
         grabber.release();
         elevator.liftAfterRelease();
 
-        brake.brake();
+        sleep(100);
+
+
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();

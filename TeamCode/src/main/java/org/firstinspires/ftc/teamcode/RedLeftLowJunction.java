@@ -3,9 +3,11 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name = "Red Left")
 @Config
+@Disabled
 public class RedLeftLowJunction extends BaseAutonomous {
 
     public static Pose2d STARTING_POSITION = new Pose2d(-37, -60, Math.toRadians(90));

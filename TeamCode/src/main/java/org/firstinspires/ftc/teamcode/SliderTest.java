@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class SliderTest extends LinearOpMode {
 
     public static int TEST_LEVEL = 2;
+    public static int ITERATIONS = 4;
 
     boolean sliderThreadWorking = true;
     @Override
@@ -32,15 +33,23 @@ public class SliderTest extends LinearOpMode {
         };
 
         waitForStart();
+        for (int i = 0; i < ITERATIONS; i ++){
+            new Thread(sliderThreadForStackPickup).start();
 
-        new Thread(sliderThreadForStackDrop).start();
+            while (sliderThreadWorking){
+                sleep(50);
+            }
+
+            new Thread(sliderThreadForStackDrop).start();
 
 
-        while (sliderThreadWorking){
-            sleep(50);
+            while (sliderThreadWorking){
+                sleep(50);
+            }
+
+            sleep(2000);
+
         }
-
-        sleep(2000);
 
     }
 }

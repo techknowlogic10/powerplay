@@ -45,6 +45,7 @@ public class DriverOperator extends OpMode {
     double SliderLimitRear = 100;
     double ElevatorPower = 0;
     double DRS_pos = 0;
+
     Brake brake;
 
 
@@ -133,6 +134,13 @@ public class DriverOperator extends OpMode {
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
 
+        double ArmMultiplier = 1;
+        if (gamepad2.right_trigger > 0.1){
+             ArmMultiplier = 4;
+        }
+
+
+
         ElevatorPower = gamepad2.right_stick_y;
         if (gamepad2.right_trigger>.5){
             ElevatorPower = ElevatorPower/2;
@@ -164,11 +172,11 @@ public class DriverOperator extends OpMode {
             Arm.setPosition(ArmPos);
         }
         if (gamepad2.left_stick_x>.1){
-            ArmPos = ArmPos + gamepad2.left_stick_x/100;
+            ArmPos = ArmPos + gamepad2.left_stick_x*ArmMultiplier/100;
             Arm.setPosition(ArmPos);
         }
         if (gamepad2.left_stick_x<-.1){
-            ArmPos = ArmPos + gamepad2.left_stick_x/100;
+            ArmPos = ArmPos + gamepad2.left_stick_x*ArmMultiplier/100;
             Arm.setPosition(ArmPos);
         }
 
@@ -212,17 +220,7 @@ telemetry.addLine("slider speed front is "+ SliderSpeedFront);
         }
 
 
-        if (Sliderdistance >= SliderLimitRear){
-            if (SliderSpeed == 1){
-                SliderSpeed = 0;
-            }
-        }
-        if (Sliderdistance > SliderLimitRear){
-            Slider.setPower(-1);
-        }
-        if (Sliderdistance == SliderLimitRear){
-            SliderSpeed = 0;
-        }
+
         telemetry.addLine("Arm position ="+ ArmPos);
         telemetry.addLine("Slider Limit is"+ SliderLimitRear);
 

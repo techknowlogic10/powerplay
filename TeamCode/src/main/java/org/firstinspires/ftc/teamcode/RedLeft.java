@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-@Autonomous (name = "Red Left States")
+@Autonomous (name = "Left States")
 @Config
 public class RedLeft extends LinearOpMode {
 
@@ -89,6 +89,9 @@ public class RedLeft extends LinearOpMode {
 
         //raise the elevator so that it will not be on its way to drivetrain
         elevator.goToLevel(0);
+        sleep(1000);
+
+        arm.move(0.12);
 
         while (opModeInInit()) {
             telemetry.addLine("Parking position is " + detector.getSignalPosition());
@@ -120,6 +123,8 @@ public class RedLeft extends LinearOpMode {
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
         additionalConeDropper.pickAndDropAdditionalCone();
+
+
         brake.goHome();
         armThreadToGoHome.start();
 
