@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Elevator {
 
     public static int TICKS_DROP_BEFORE_RELEASE = 200;
-    public static int TICKS_LIFT_AFTER_RELEASE = 100;
+    public static int TICKS_LIFT_AFTER_RELEASE = 350;
 
     public static int INITIAL_RISE_TICKS = 350;
 
