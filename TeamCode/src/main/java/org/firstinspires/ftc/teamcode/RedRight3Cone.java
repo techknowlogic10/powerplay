@@ -10,13 +10,13 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-@Autonomous (name = "Right States")
+@Autonomous (name = "Right States 3 Cone")
 @Config
 
 public class RedRight3Cone extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
-    public static Pose2d MID_WAY = new Pose2d(36,-40,Math.toRadians(15));
+    public static Pose2d MID_WAY = new Pose2d(36,-40,Math.toRadians(16));
     public static Pose2d CONE_DROP_POSITION = new Pose2d(34,-12.25,Math.toRadians(15));
     public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -31, Math.toRadians(0));
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = -22;

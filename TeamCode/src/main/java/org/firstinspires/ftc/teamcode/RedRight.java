@@ -18,7 +18,7 @@ public class RedRight extends LinearOpMode {
 
     public static Pose2d STARTING_POSITION = new Pose2d(37, -60, Math.toRadians(90));
     public static Pose2d MID_WAY = new Pose2d(36,-40,Math.toRadians(15));
-    public static Pose2d CONE_DROP_POSITION = new Pose2d(34,-12.25,Math.toRadians(15));
+    public static Pose2d CONE_DROP_POSITION = new Pose2d(34,-12.25,Math.toRadians(16));
     public static Pose2d PARKING_STEP1_POSITION = new Pose2d(34.5, -31, Math.toRadians(0));
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_1 = -22;
     public static int PARKING_STEP2_FORWARD_PARKING_POSITION_3 = 22;
@@ -115,9 +115,10 @@ public class RedRight extends LinearOpMode {
 
         //release the preloaded cone
         grabber.release();
+        sleep(100);
         elevator.liftAfterRelease();
 
-        sleep(100);
+
 
 
         additionalConeDropper.pickAndDropAdditionalCone();

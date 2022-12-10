@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.opencv.core.Mat;
 
 
 @TeleOp
@@ -109,11 +110,7 @@ public class DriverOperator extends OpMode {
             Drivepower = 1.5;
         }
 
-        if (gamepad1.a){
-            brake.brake();
-        } else if(gamepad1.b){
-            brake.goHome();
-        }
+
 
         telemetry.addLine("Slider is" + SliderDistance.getDistance(DistanceUnit.CM));
         double y = gamepad1.left_stick_y; // Remember, this is reversed!
@@ -129,6 +126,12 @@ public class DriverOperator extends OpMode {
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
+        double averageSpeed = (Math.abs(frontLeftPower)+Math.abs(backLeftPower)+Math.abs(frontRightPower)+Math.abs(backRightPower))/4;
+        if (averageSpeed < 0.05){
+            brake.brake();
+        } else{
+            brake.goHome();
+        }
         frontLeft.setPower(frontLeftPower);
         backLeft.setPower(backLeftPower);
         frontRight.setPower(frontRightPower);
