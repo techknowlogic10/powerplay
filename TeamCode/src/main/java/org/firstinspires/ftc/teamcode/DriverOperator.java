@@ -128,7 +128,12 @@ public class DriverOperator extends OpMode {
 
         double averageSpeed = (Math.abs(frontLeftPower)+Math.abs(backLeftPower)+Math.abs(frontRightPower)+Math.abs(backRightPower))/4;
         if (averageSpeed < 0.05){
-            brake.brake();
+            if (gamepad1.b){
+                brake.goHome();
+            } else {
+                brake.brake();
+            }
+
         } else{
             brake.goHome();
         }
@@ -141,6 +146,7 @@ public class DriverOperator extends OpMode {
         if (gamepad2.right_trigger > 0.1){
              ArmMultiplier = 4;
         }
+
 
 
 
@@ -185,10 +191,10 @@ public class DriverOperator extends OpMode {
 
 
         if (gamepad1.right_bumper){
-            if (ConeSensor.getState() == false){
-                    Slider.setPower(.1);
-                    gamepad1.rumble(100);
-            }else
+            if (ConeSensor.getState() == false) {
+                Slider.setPower(.1);
+                gamepad1.rumble(100);
+            }
                 Slider.setPower(SliderSpeedFront);
         } else if (gamepad1.left_bumper) {
             Slider.setPower(SliderSpeedRear);
